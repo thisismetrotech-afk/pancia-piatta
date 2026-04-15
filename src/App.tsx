@@ -136,8 +136,8 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-3 gap-8 border-t border-sage/20 pt-10">
             <div><div className="text-3xl font-serif font-bold text-sage">21</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Giorni</div></div>
-            <div><div className="text-3xl font-serif font-bold text-sage">6</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Studi</div></div>
-            <div><div className="text-3xl font-serif font-bold text-sage">+500</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Donne</div></div>
+            <div><div className="text-3xl font-serif font-bold text-sage">+300</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Studi</div></div>
+            <div><div className="text-3xl font-serif font-bold text-sage">+1500</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Donne</div></div>
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative flex justify-center">
