@@ -99,8 +99,11 @@ export default function App() {
           </a>
 
           <div className="flex items-center gap-4">
-<a 
-              href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01" 
+            <a href="mailto:panciapiattainfo@gmail.com" className="hidden md:block text-sm font-bold text-brown/60 hover:text-sage transition-colors">
+              panciapiattainfo@gmail.com
+            </a>
+            <a
+              href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01"
               className="hidden sm:flex bg-sage text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-sage-dark shadow-lg shadow-sage/20 items-center gap-2 transition-all"
             >
               Scarica Ora <ArrowRight className="w-4 h-4" />
@@ -310,7 +313,12 @@ export default function App() {
             <Leaf className="w-10 h-10 text-sage" fill="currentColor" />
             <span className="text-3xl font-serif font-bold text-brown">PanciaPiatta</span>
           </div>
-          <div className="text-sm font-bold text-brown/40 uppercase tracking-widest">© 2025 PanciaPiatta. Tutti i diritti riservati.</div>
+          <div className="flex flex-col md:items-end gap-2 text-center md:text-right">
+            <div className="text-sm font-bold text-brown/40 uppercase tracking-widest">© 2025 PanciaPiatta. Tutti i diritti riservati.</div>
+            <a href="mailto:panciapiattainfo@gmail.com" className="text-sm font-bold text-sage hover:text-sage-dark transition-colors">
+              panciapiattainfo@gmail.com
+            </a>
+          </div>
         </div>
         <div className="max-w-4xl mx-auto text-center px-6">
           <p className="text-xs text-brown/50 uppercase tracking-[0.2em] leading-loose font-bold">
