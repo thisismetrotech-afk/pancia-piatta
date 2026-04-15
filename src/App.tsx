@@ -214,7 +214,7 @@ function HomePage() {
       <section id="contenuto" className="py-32 bg-cream overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-20 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown leading-tight">35 pagine che cambiano il tuo rapporto con il cibo.</h2>
+            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown leading-tight">48 pagine che cambiano il tuo rapporto con il cibo.</h2>
             <ul className="space-y-6">
               {[
                 "Piano pasti completo 21 giorni — colazione, spuntino, pranzo, merenda, cena",
@@ -233,13 +233,13 @@ function HomePage() {
               ))}
             </ul>
           </motion.div>
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative aspect-[3/4] bg-sage rounded-[3rem] shadow-2xl flex flex-col items-center justify-center p-16 text-center text-white overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')] opacity-20"></div>
-            <Leaf className="w-20 h-20 mb-10 mx-auto opacity-90" />
-            <h3 className="text-4xl md:text-5xl font-serif font-bold mb-6 leading-tight">Pancia Piatta in 21 Giorni</h3>
-            <div className="w-24 h-1.5 bg-white/40 mx-auto mb-8 rounded-full"></div>
-            <p className="text-xl font-serif italic opacity-90">Il Piano Alimentare Estivo</p>
-            <div className="absolute -top-8 -right-8 bg-yellow-400 text-brown px-8 py-4 rounded-3xl font-black shadow-2xl rotate-12 text-lg tracking-tight">PDF ISTANTANEO</div>
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative flex justify-center">
+            <img
+              src="/copertina.png"
+              alt="Pancia Piatta in 21 Giorni - Copertina Ebook"
+              className="rounded-[2.5rem] shadow-2xl object-contain w-4/5 border border-sage/10"
+            />
+            <div className="absolute -top-4 -right-4 bg-yellow-400 text-brown px-6 py-3 rounded-3xl font-black shadow-2xl rotate-12 text-base tracking-tight">PDF ISTANTANEO</div>
           </motion.div>
         </div>
       </section>
