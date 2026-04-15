@@ -128,7 +128,7 @@ export default function App() {
           </p>
           <div className="flex flex-col sm:flex-row gap-5 mb-16">
             <a href="#acquista" className="bg-sage text-white px-10 py-5 rounded-full text-lg font-bold hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all">
-              Scarica l'Ebook — €9,99
+              Scarica l'Ebook — €19,99
             </a>
             <a href="#metodo" className="border-2 border-sage text-sage px-10 py-5 rounded-full text-lg font-bold hover:bg-sage hover:text-white transition-all text-center">
               Scopri il metodo ↓
@@ -275,8 +275,8 @@ export default function App() {
             <h2 className="text-6xl md:text-8xl font-serif mb-8 leading-tight">Prendi l'Ebook Adesso</h2>
             <p className="text-xl md:text-3xl text-white/90 mb-16 font-medium leading-relaxed">Piano completo, 6 studi scientifici, 5 ricette bonus. PDF immediato.</p>
             <div className="mb-16 flex items-center justify-center gap-8">
-              <span className="text-3xl line-through opacity-60 font-serif">€29,99</span>
-              <span className="text-7xl md:text-9xl font-serif font-black">€9,99</span>
+              <span className="text-3xl line-through opacity-60 font-serif">€39,99</span>
+              <span className="text-7xl md:text-9xl font-serif font-black">€19,99</span>
             </div>
             <button className="bg-white text-sage px-16 py-8 rounded-full text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-12 group">
               Scarica Ora <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
