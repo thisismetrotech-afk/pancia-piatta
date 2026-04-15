@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Work Sans", sans-serif;
+  
+  --color-beige: #fdf9f4;
+  --color-sage: #4a7c59;
+  --color-brown: #2a1f14;
+  --color-sage-dark: #3a6347;
+  --color-cream: #fffcf9;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans bg-beige text-brown transition-colors duration-300 antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-brown;
+  }
+}
+
+.dark {
+  --color-beige: #121212;
+  --color-brown: #fdf9f4;
+  --color-sage: #6a9c79;
+  --color-cream: #1a1a1a;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Custom contrast helpers */
+.text-contrast {
+  @apply text-brown dark:text-beige;
+}
+
+.bg-contrast {
+  @apply bg-beige dark:bg-zinc-900;
+}
