@@ -106,14 +106,7 @@ export default function App() {
           </a>
 
           <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setIsDarkMode(!isDarkMode)} 
-              className="p-2.5 rounded-full bg-sage/5 hover:bg-sage/15 text-sage transition-all"
-              aria-label="Toggle Dark Mode"
-            >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-            <a 
+<a 
               href="#acquista" 
               className="hidden sm:flex bg-sage text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-sage-dark shadow-lg shadow-sage/20 items-center gap-2 transition-all"
             >
