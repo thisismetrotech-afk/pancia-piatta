@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { Routes, Route, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import CookiePolicy from './pages/CookiePolicy';
+import TerminiCondizioni from './pages/TerminiCondizioni';
 import {
   Leaf, Check, Star,
   ArrowRight, FlaskConical, Utensils, Clock,
@@ -87,7 +91,7 @@ const SectionHeader = ({ title, subtitle, label }: { title: string, subtitle?: s
   </div>
 );
 
-export default function App() {
+function HomePage() {
   return (
     <div id="top" className="min-h-screen bg-beige text-brown selection:bg-sage selection:text-white">
       {/* HEADER SEMPLIFICATO */}
@@ -320,12 +324,28 @@ export default function App() {
             </a>
           </div>
         </div>
-        <div className="max-w-4xl mx-auto text-center px-6">
+        <div className="max-w-4xl mx-auto text-center px-6 space-y-6">
+          <div className="flex flex-wrap justify-center gap-6 text-sm font-bold text-brown/50 uppercase tracking-widest">
+            <Link to="/privacy-policy" className="hover:text-sage transition-colors">Privacy Policy</Link>
+            <Link to="/cookie-policy" className="hover:text-sage transition-colors">Cookie Policy</Link>
+            <Link to="/termini-e-condizioni" className="hover:text-sage transition-colors">Termini e Condizioni</Link>
+          </div>
           <p className="text-xs text-brown/50 uppercase tracking-[0.2em] leading-loose font-bold">
             Disclaimer: Questo ebook è a scopo informativo. I risultati individuali possono variare. Consulta un medico prima di modificare la tua dieta.
           </p>
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/cookie-policy" element={<CookiePolicy />} />
+      <Route path="/termini-e-condizioni" element={<TerminiCondizioni />} />
+    </Routes>
   );
 }
