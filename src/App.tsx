@@ -96,14 +96,14 @@ export default function App() {
   }, [isDarkMode]);
 
   return (
-    <div className="min-h-screen bg-beige dark:bg-zinc-950 text-brown dark:text-beige selection:bg-sage selection:text-white">
+    <div id="top" className="min-h-screen bg-beige dark:bg-zinc-950 text-brown dark:text-beige selection:bg-sage selection:text-white">
       {/* HEADER SEMPLIFICATO */}
       <header className="sticky top-0 z-50 bg-beige/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-sage/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <a href="#top" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Leaf className="w-8 h-8 text-sage" fill="currentColor" />
             <span className="text-2xl font-serif font-bold text-brown dark:text-beige">PanciaPiatta</span>
-          </div>
+          </a>
 
           <div className="flex items-center gap-4">
             <button 
@@ -155,7 +155,7 @@ export default function App() {
             width="500"
             height="625"
             loading="lazy"
-            className="relative rounded-[2.5rem] shadow-2xl object-cover w-4/5 aspect-[4/5] border border-sage/10"
+            className="relative rounded-[2.5rem] shadow-2xl object-contain w-3/5 border border-sage/10"
           />
           <div className="absolute -bottom-8 -left-8 bg-white dark:bg-zinc-800 p-8 rounded-3xl shadow-2xl border border-sage/10 max-w-[220px] hidden sm:block">
             <div className="flex gap-1 mb-3">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
