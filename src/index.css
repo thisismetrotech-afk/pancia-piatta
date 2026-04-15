@@ -4,23 +4,27 @@
 @theme {
   --font-serif: "Playfair Display", serif;
   --font-sans: "Work Sans", sans-serif;
-  
-  --color-beige: #fdf9f4;
+
+  --color-beige: #fef6e8;
   --color-sage: #4a7c59;
   --color-brown: #2a1f14;
   --color-sage-dark: #3a6347;
-  --color-cream: #fffcf9;
+  --color-cream: #fdf0d5;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: #fef6e8 !important;
+    color-scheme: light !important;
   }
 
   body {
-    @apply font-sans bg-beige text-brown transition-colors duration-300 antialiased;
+    @apply font-sans text-brown antialiased;
+    background-color: #fef6e8 !important;
+    color: #2a1f14 !important;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif text-brown;
   }
