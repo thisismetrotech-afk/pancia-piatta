@@ -149,14 +149,13 @@ export default function App() {
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
           <div className="absolute -inset-4 bg-sage/5 rounded-[3rem] rotate-2"></div>
-          <img 
-            src="https://picsum.photos/seed/healthyfood/500/625" 
-            alt="Piano alimentare sano" 
-            width="500" 
-            height="625" 
-            loading="lazy" 
-            className="relative rounded-[2.5rem] shadow-2xl object-cover w-full aspect-[4/5] border border-sage/10" 
-            referrerPolicy="no-referrer" 
+          <img
+            src="/copertina.png"
+            alt="Pancia Piatta in 21 Giorni - Copertina Ebook"
+            width="500"
+            height="625"
+            loading="lazy"
+            className="relative rounded-[2.5rem] shadow-2xl object-cover w-full aspect-[4/5] border border-sage/10"
           />
           <div className="absolute -bottom-8 -left-8 bg-white dark:bg-zinc-800 p-8 rounded-3xl shadow-2xl border border-sage/10 max-w-[220px] hidden sm:block">
             <div className="flex gap-1 mb-3">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
