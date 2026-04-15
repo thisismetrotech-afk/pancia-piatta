@@ -78,7 +78,7 @@ const faqItems = [
   { q: "Funziona anche se mangio fuori casa spesso?", a: "Sì, l'ebook ha una sezione dedicata per ristoranti, bar e pranzi di lavoro." },
   { q: "In quanto tempo vedo i risultati?", a: "Riduzione del gonfiore già nella prima settimana. Girovita ridotto entro 21 giorni." },
   { q: "Posso seguirlo da vegetariana/vegana?", a: "Sì con le sostituzioni indicate nell'ebook per ogni pasto proteico." },
-  { q: "Come ricevo l'ebook?", a: "Email immediata con link PDF dopo l'acquisto. Nessuna attesa." }
+  { q: "Come ricevo l'ebook?", a: "Email immediata con link ebook dopo l'acquisto. Nessuna attesa." }
 ];
 
 // --- Components ---
@@ -239,7 +239,6 @@ function HomePage() {
               alt="Pancia Piatta in 21 Giorni - Copertina Ebook"
               className="rounded-[2.5rem] shadow-2xl object-contain w-4/5 border border-sage/10"
             />
-            <div className="absolute -top-4 -right-4 bg-yellow-400 text-brown px-6 py-3 rounded-3xl font-black shadow-2xl rotate-12 text-base tracking-tight">PDF ISTANTANEO</div>
           </motion.div>
         </div>
       </section>
@@ -274,7 +273,7 @@ function HomePage() {
           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
             <span className="inline-block px-6 py-2 bg-white/20 rounded-full text-xs font-black tracking-[0.2em] uppercase mb-10">🛒 Offerta Lancio</span>
             <h2 className="text-6xl md:text-8xl font-serif mb-8 leading-tight">Prendi l'Ebook Adesso</h2>
-            <p className="text-xl md:text-3xl text-white/90 mb-16 font-medium leading-relaxed">Piano completo, 6 studi scientifici, 5 ricette bonus. PDF immediato.</p>
+            <p className="text-xl md:text-3xl text-white/90 mb-16 font-medium leading-relaxed">Piano completo, 6 studi scientifici, 5 ricette bonus. Ebook immediato.</p>
             <div className="mb-16 flex items-center justify-center gap-8">
               <span className="text-3xl line-through opacity-60 font-serif">€39,99</span>
               <span className="text-7xl md:text-9xl font-serif font-black">€19,99</span>
@@ -284,7 +283,7 @@ function HomePage() {
             </a>
             <div className="flex flex-wrap justify-center gap-10 text-sm font-bold text-white/80 uppercase tracking-widest">
               <span className="flex items-center gap-2">🔒 Pagamento sicuro</span>
-              <span className="flex items-center gap-2">📄 PDF istantaneo</span>
+              <span className="flex items-center gap-2">📄 Ebook istantaneo</span>
               <span className="flex items-center gap-2">✅ 30gg Garanzia</span>
             </div>
           </motion.div>
