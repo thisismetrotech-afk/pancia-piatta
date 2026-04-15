@@ -107,7 +107,7 @@ export default function App() {
 
           <div className="flex items-center gap-4">
 <a 
-              href="#acquista" 
+              href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01" 
               className="hidden sm:flex bg-sage text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-sage-dark shadow-lg shadow-sage/20 items-center gap-2 transition-all"
             >
               Scarica Ora <ArrowRight className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default function App() {
             Il piano alimentare estivo che funziona davvero. Basato sulla scienza, adatto alla vita italiana.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 mb-16">
-            <a href="#acquista" className="bg-sage text-white px-10 py-5 rounded-full text-lg font-bold hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all">
+            <a href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01" className="bg-sage text-white px-10 py-5 rounded-full text-lg font-bold hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all">
               Scarica l'Ebook — €19,99
             </a>
             <a href="#metodo" className="border-2 border-sage text-sage px-10 py-5 rounded-full text-lg font-bold hover:bg-sage hover:text-white transition-all text-center">
@@ -278,9 +278,9 @@ export default function App() {
               <span className="text-3xl line-through opacity-60 font-serif">€39,99</span>
               <span className="text-7xl md:text-9xl font-serif font-black">€19,99</span>
             </div>
-            <button className="bg-white text-sage px-16 py-8 rounded-full text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-12 group">
+            <a href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01" target="_blank" rel="noopener" className="bg-white text-sage px-16 py-8 rounded-full text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-12 group">
               Scarica Ora <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
-            </button>
+            </a>
             <div className="flex flex-wrap justify-center gap-10 text-sm font-bold text-white/80 uppercase tracking-widest">
               <span className="flex items-center gap-2">🔒 Pagamento sicuro</span>
               <span className="flex items-center gap-2">📄 PDF istantaneo</span>
