@@ -100,10 +100,10 @@ export default function App() {
       {/* HEADER SEMPLIFICATO */}
       <header className="sticky top-0 z-50 bg-beige/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-sage/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
-          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Leaf className="w-8 h-8 text-sage" fill="currentColor" />
             <span className="text-2xl font-serif font-bold text-brown dark:text-beige">PanciaPiatta</span>
-          </button>
+          </a>
 
           <div className="flex items-center gap-4">
             <button 
