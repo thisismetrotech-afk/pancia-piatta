@@ -147,7 +147,7 @@ export default function App() {
             <div><div className="text-3xl font-serif font-bold text-sage">+500</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 dark:text-beige/50 mt-1">Donne</div></div>
           </div>
         </motion.div>
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative flex justify-center">
           <div className="absolute -inset-4 bg-sage/5 rounded-[3rem] rotate-2"></div>
           <img
             src="/copertina.png"
@@ -155,7 +155,7 @@ export default function App() {
             width="500"
             height="625"
             loading="lazy"
-            className="relative rounded-[2.5rem] shadow-2xl object-cover w-full aspect-[4/5] border border-sage/10"
+            className="relative rounded-[2.5rem] shadow-2xl object-cover w-4/5 aspect-[4/5] border border-sage/10"
           />
           <div className="absolute -bottom-8 -left-8 bg-white dark:bg-zinc-800 p-8 rounded-3xl shadow-2xl border border-sage/10 max-w-[220px] hidden sm:block">
             <div className="flex gap-1 mb-3">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
