@@ -82,20 +82,20 @@ const faqItems = [
 const SectionHeader = ({ title, subtitle, label }: { title: string, subtitle?: string, label?: string }) => (
   <div className="text-center mb-16 px-4">
     {label && <span className="text-sage font-bold tracking-widest uppercase text-xs mb-2 block">{label}</span>}
-    <h2 className="text-4xl md:text-5xl font-serif mt-2 mb-6 text-brown dark:text-beige">{title}</h2>
-    {subtitle && <p className="text-lg text-brown/70 dark:text-beige/70 max-w-2xl mx-auto leading-relaxed">{subtitle}</p>}
+    <h2 className="text-4xl md:text-5xl font-serif mt-2 mb-6 text-brown">{title}</h2>
+    {subtitle && <p className="text-lg text-brown/70 max-w-2xl mx-auto leading-relaxed">{subtitle}</p>}
   </div>
 );
 
 export default function App() {
   return (
-    <div id="top" className="min-h-screen bg-beige dark:bg-zinc-950 text-brown dark:text-beige selection:bg-sage selection:text-white">
+    <div id="top" className="min-h-screen bg-beige text-brown selection:bg-sage selection:text-white">
       {/* HEADER SEMPLIFICATO */}
-      <header className="sticky top-0 z-50 bg-beige/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-sage/10">
+      <header className="sticky top-0 z-50 bg-beige/90 backdrop-blur-md border-b border-sage/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
           <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Leaf className="w-8 h-8 text-sage" fill="currentColor" />
-            <span className="text-2xl font-serif font-bold text-brown dark:text-beige">PanciaPiatta</span>
+            <span className="text-2xl font-serif font-bold text-brown">PanciaPiatta</span>
           </a>
 
           <div className="flex items-center gap-4">
@@ -113,10 +113,10 @@ export default function App() {
       <section className="pt-12 pb-20 md:pt-24 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
           <span className="inline-block px-4 py-1.5 bg-sage/10 text-sage rounded-full text-xs font-bold tracking-widest uppercase mb-8">✨ Novità Estate 2025</span>
-          <h1 className="text-5xl md:text-7xl font-serif leading-[1.1] mb-8 text-brown dark:text-beige">
+          <h1 className="text-5xl md:text-7xl font-serif leading-[1.1] mb-8 text-brown">
             Pancia <span className="italic text-sage">Piatta</span> in 21 Giorni
           </h1>
-          <p className="text-xl md:text-2xl text-brown/80 dark:text-beige/80 mb-12 leading-relaxed">
+          <p className="text-xl md:text-2xl text-brown/80 mb-12 leading-relaxed">
             Il piano alimentare estivo che funziona davvero. Basato sulla scienza, adatto alla vita italiana.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 mb-16">
@@ -128,9 +128,9 @@ export default function App() {
             </a>
           </div>
           <div className="grid grid-cols-3 gap-8 border-t border-sage/20 pt-10">
-            <div><div className="text-3xl font-serif font-bold text-sage">21</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 dark:text-beige/50 mt-1">Giorni</div></div>
-            <div><div className="text-3xl font-serif font-bold text-sage">6</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 dark:text-beige/50 mt-1">Studi</div></div>
-            <div><div className="text-3xl font-serif font-bold text-sage">+500</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 dark:text-beige/50 mt-1">Donne</div></div>
+            <div><div className="text-3xl font-serif font-bold text-sage">21</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Giorni</div></div>
+            <div><div className="text-3xl font-serif font-bold text-sage">6</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Studi</div></div>
+            <div><div className="text-3xl font-serif font-bold text-sage">+500</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Donne</div></div>
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative flex justify-center">
@@ -143,15 +143,15 @@ export default function App() {
             loading="lazy"
             className="relative rounded-[2.5rem] shadow-2xl object-contain w-3/5 border border-sage/10"
           />
-          <div className="absolute -bottom-8 -left-8 bg-white dark:bg-zinc-800 p-8 rounded-3xl shadow-2xl border border-sage/10 max-w-[220px] hidden sm:block">
+          <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-sage/10 max-w-[220px] hidden sm:block">
             <div className="flex gap-1 mb-3">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
-            <p className="text-base italic font-serif text-brown dark:text-beige leading-snug">"I jeans mi stanno finalmente bene!"</p>
+            <p className="text-base italic font-serif text-brown leading-snug">"I jeans mi stanno finalmente bene!"</p>
           </div>
         </motion.div>
       </section>
 
       {/* METODO */}
-      <section id="metodo" className="py-32 bg-cream dark:bg-zinc-900/30">
+      <section id="metodo" className="py-32 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Il Metodo" subtitle="Un approccio olistico e scientifico per trasformare il tuo corpo in meno di un mese." />
           <div className="grid md:grid-cols-3 gap-10">
@@ -163,10 +163,10 @@ export default function App() {
               { icon: <TrendingUp />, title: "3 Fasi Progressive", desc: "Reset → Accelerazione → Mantenimento." },
               { icon: <Heart />, title: "Senza Fame", desc: "Piano bilanciato che sazia ad ogni pasto." }
             ].map((item, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="p-10 rounded-[2.5rem] bg-beige dark:bg-zinc-800 border border-sage/10 hover:border-sage/30 transition-all shadow-sm">
+              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="p-10 rounded-[2.5rem] bg-beige border border-sage/10 hover:border-sage/30 transition-all shadow-sm">
                 <div className="w-14 h-14 bg-sage/10 text-sage rounded-2xl flex items-center justify-center mb-8">{item.icon}</div>
-                <h3 className="text-2xl font-serif font-bold mb-5 text-brown dark:text-beige">{item.title}</h3>
-                <p className="text-brown/70 dark:text-beige/70 leading-relaxed text-lg">{item.desc}</p>
+                <h3 className="text-2xl font-serif font-bold mb-5 text-brown">{item.title}</h3>
+                <p className="text-brown/70 leading-relaxed text-lg">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -174,24 +174,24 @@ export default function App() {
       </section>
 
       {/* SCIENZA */}
-      <section id="scienza" className="py-32 bg-beige dark:bg-zinc-950">
+      <section id="scienza" className="py-32 bg-beige">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="La Scienza Dietro il Piano" label="Evidence Based" subtitle="Non è magia, è biologia. Ecco gli studi che hanno guidato la creazione di questo ebook." />
           <div className="grid md:grid-cols-3 gap-10">
             {studies.map((study, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col bg-white dark:bg-zinc-800 rounded-[2.5rem] overflow-hidden border border-sage/15 shadow-md hover:shadow-2xl transition-all">
+              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-sage/15 shadow-md hover:shadow-2xl transition-all">
                 <div className="bg-sage p-6 text-white">
                   <div className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-90 mb-2">Studio {study.id} — {study.journal}</div>
                   <h3 className="text-xl font-serif font-bold leading-tight">{study.title}</h3>
                 </div>
                 <div className="p-8 flex-grow flex flex-col">
-                  <p className="text-base text-brown/80 dark:text-beige/80 mb-8 italic leading-relaxed">"{study.explanation}"</p>
+                  <p className="text-base text-brown/80 mb-8 italic leading-relaxed">"{study.explanation}"</p>
                   <div className="mt-auto">
-                    <div className="bg-sage/5 dark:bg-sage/10 border border-sage/20 p-6 rounded-3xl mb-6">
+                    <div className="bg-sage/5 border border-sage/20 p-6 rounded-3xl mb-6">
                       <p className="text-base font-bold text-sage leading-snug">{study.discovery}</p>
                     </div>
                     <div className="flex justify-between items-end">
-                      <span className="text-[11px] text-brown/50 dark:text-beige/50 font-bold uppercase tracking-wider max-w-[150px]">{study.source}</span>
+                      <span className="text-[11px] text-brown/50 font-bold uppercase tracking-wider max-w-[150px]">{study.source}</span>
                       <a href={study.link} target="_blank" rel="noopener" className="bg-sage/10 text-sage p-2.5 rounded-full hover:bg-sage hover:text-white transition-all"><ExternalLink className="w-4 h-4" /></a>
                     </div>
                   </div>
@@ -203,10 +203,10 @@ export default function App() {
       </section>
 
       {/* CONTENUTO */}
-      <section id="contenuto" className="py-32 bg-cream dark:bg-zinc-900/30 overflow-hidden">
+      <section id="contenuto" className="py-32 bg-cream overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-20 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown dark:text-beige leading-tight">35 pagine che cambiano il tuo rapporto con il cibo.</h2>
+            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown leading-tight">35 pagine che cambiano il tuo rapporto con il cibo.</h2>
             <ul className="space-y-6">
               {[
                 "Piano pasti completo 21 giorni — colazione, spuntino, pranzo, merenda, cena",
@@ -220,7 +220,7 @@ export default function App() {
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-4">
                   <div className="mt-1 bg-sage text-white rounded-full p-1 flex-shrink-0"><Check className="w-4 h-4" /></div>
-                  <span className="text-brown/80 dark:text-beige/80 text-lg leading-snug font-medium">{item}</span>
+                  <span className="text-brown/80 text-lg leading-snug font-medium">{item}</span>
                 </li>
               ))}
             </ul>
@@ -237,7 +237,7 @@ export default function App() {
       </section>
 
       {/* TESTIMONIANZE */}
-      <section id="testimonianze" className="py-32 bg-beige dark:bg-zinc-950">
+      <section id="testimonianze" className="py-32 bg-beige">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Cosa dicono le donne che l'hanno provato" />
           <div className="grid md:grid-cols-3 gap-10">
@@ -246,11 +246,11 @@ export default function App() {
               { quote: "Finalmente un piano per la vita reale. Ho mangiato anche la pizza il sabato e ho comunque perso il gonfiore.", author: "Alessia R., Milano", result: "Gonfiore sparito dopo 10 giorni" },
               { quote: "Gli studi scientifici mi hanno convinto. Non è il solito ebook copia-incolla.", author: "Francesca L., Roma", result: "+3 kg in meno alla fine" }
             ].map((testimonial, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white dark:bg-zinc-800 p-10 rounded-[2.5rem] border border-sage/15 shadow-lg relative">
+              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white p-10 rounded-[2.5rem] border border-sage/15 shadow-lg relative">
                 <div className="flex gap-1.5 mb-8">{[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />)}</div>
-                <blockquote className="text-2xl font-serif italic mb-10 leading-relaxed text-brown dark:text-beige">"{testimonial.quote}"</blockquote>
+                <blockquote className="text-2xl font-serif italic mb-10 leading-relaxed text-brown">"{testimonial.quote}"</blockquote>
                 <div className="flex items-center justify-between pt-8 border-t border-sage/10">
-                  <div className="text-sm font-black text-brown/50 dark:text-beige/50 uppercase tracking-widest">{testimonial.author}</div>
+                  <div className="text-sm font-black text-brown/50 uppercase tracking-widest">{testimonial.author}</div>
                   <div className="bg-sage text-white px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest shadow-md">{testimonial.result}</div>
                 </div>
               </motion.div>
@@ -284,18 +284,18 @@ export default function App() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-32 bg-cream dark:bg-zinc-900/30">
+      <section id="faq" className="py-32 bg-cream">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Hai dubbi? Ti rispondo." />
           <div className="space-y-6">
             {faqItems.map((item, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <details className="group bg-beige dark:bg-zinc-800 rounded-3xl border border-sage/10 overflow-hidden shadow-sm">
+                <details className="group bg-beige rounded-3xl border border-sage/10 overflow-hidden shadow-sm">
                   <summary className="flex items-center justify-between p-8 cursor-pointer list-none">
-                    <h3 className="text-xl font-bold pr-8 text-brown dark:text-beige leading-tight">{item.q}</h3>
+                    <h3 className="text-xl font-bold pr-8 text-brown leading-tight">{item.q}</h3>
                     <div className="bg-sage/10 p-3 rounded-full group-open:rotate-180 transition-transform flex-shrink-0"><ChevronDown className="w-6 h-6 text-sage" /></div>
                   </summary>
-                  <div className="px-8 pb-8 text-brown/70 dark:text-beige/70 leading-relaxed text-lg font-medium">{item.a}</div>
+                  <div className="px-8 pb-8 text-brown/70 leading-relaxed text-lg font-medium">{item.a}</div>
                 </details>
               </motion.div>
             ))}
@@ -304,16 +304,16 @@ export default function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-20 bg-beige dark:bg-zinc-950 border-t border-sage/20">
+      <footer className="py-20 bg-beige border-t border-sage/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-10 mb-16">
           <div className="flex items-center gap-3">
             <Leaf className="w-10 h-10 text-sage" fill="currentColor" />
-            <span className="text-3xl font-serif font-bold text-brown dark:text-beige">PanciaPiatta</span>
+            <span className="text-3xl font-serif font-bold text-brown">PanciaPiatta</span>
           </div>
-          <div className="text-sm font-bold text-brown/40 dark:text-beige/40 uppercase tracking-widest">© 2025 PanciaPiatta. Tutti i diritti riservati.</div>
+          <div className="text-sm font-bold text-brown/40 uppercase tracking-widest">© 2025 PanciaPiatta. Tutti i diritti riservati.</div>
         </div>
         <div className="max-w-4xl mx-auto text-center px-6">
-          <p className="text-xs text-brown/50 dark:text-beige/50 uppercase tracking-[0.2em] leading-loose font-bold">
+          <p className="text-xs text-brown/50 uppercase tracking-[0.2em] leading-loose font-bold">
             Disclaimer: Questo ebook è a scopo informativo. I risultati individuali possono variare. Consulta un medico prima di modificare la tua dieta.
           </p>
         </div>
