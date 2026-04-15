@@ -26,13 +26,6 @@
   }
 }
 
-.dark {
-  --color-beige: #121212;
-  --color-brown: #fdf9f4;
-  --color-sage: #6a9c79;
-  --color-cream: #1a1a1a;
-}
-
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
