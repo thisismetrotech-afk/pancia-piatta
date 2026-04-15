@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { 
-  Leaf, Sun, Moon, Check, Star, 
-  ArrowRight, FlaskConical, Utensils, Clock, 
-  Waves, TrendingUp, Heart, ExternalLink, ChevronDown 
+import {
+  Leaf, Check, Star,
+  ArrowRight, FlaskConical, Utensils, Clock,
+  Waves, TrendingUp, Heart, ExternalLink, ChevronDown
 } from 'lucide-react';
 
 // --- Data ---
@@ -89,12 +88,6 @@ const SectionHeader = ({ title, subtitle, label }: { title: string, subtitle?: s
 );
 
 export default function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDarkMode);
-  }, [isDarkMode]);
-
   return (
     <div id="top" className="min-h-screen bg-beige dark:bg-zinc-950 text-brown dark:text-beige selection:bg-sage selection:text-white">
       {/* HEADER SEMPLIFICATO */}
