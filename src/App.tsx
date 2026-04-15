@@ -153,6 +153,7 @@ function HomePage() {
           <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-sage/10 max-w-[220px] hidden sm:block">
             <div className="flex gap-1 mb-3">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
             <p className="text-base italic font-serif text-brown leading-snug">"I jeans mi stanno finalmente bene!"</p>
+            <p className="text-xs font-bold text-brown/50 uppercase tracking-widest mt-2">— Giulia M., Napoli</p>
           </div>
         </motion.div>
       </section>
