@@ -119,7 +119,7 @@ function HomePage() {
       {/* HERO */}
       <section className="pt-12 pb-20 md:pt-24 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-          <span className="inline-block px-4 py-1.5 bg-sage/10 text-sage rounded-full text-xs font-bold tracking-widest uppercase mb-8">✨ Novità Estate 2025</span>
+          <span className="inline-block px-4 py-1.5 bg-sage/10 text-sage rounded-full text-xs font-bold tracking-widest uppercase mb-8">✨ Novità Estate 2026</span>
           <h1 className="text-5xl md:text-7xl font-serif leading-[1.1] mb-8 text-brown">
             Pancia <span className="italic text-sage">Piatta</span> in 21 Giorni
           </h1>
