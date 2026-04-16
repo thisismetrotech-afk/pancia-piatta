@@ -124,7 +124,7 @@ function HomePage() {
             Pancia <span className="italic text-sage">Piatta</span> in 21 Giorni
           </h1>
           <p className="text-xl md:text-2xl text-brown/80 mb-12 leading-relaxed">
-            Il piano alimentare estivo che funziona davvero. Basato sulla scienza, pensato per la donna moderna.
+            Il piano alimentare estivo che funziona davvero. Basato sulla scienza, progettato per risultati reali.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 mb-16">
             <a href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01" className="bg-sage text-white px-10 py-5 rounded-full text-lg font-bold hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all">
