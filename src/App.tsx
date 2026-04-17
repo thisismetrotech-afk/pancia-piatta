@@ -111,33 +111,20 @@ const purchaseNotifications = [
 
 // --- Hooks ---
 
-function useCountdown(targetHours: number) {
-  const totalSeconds = targetHours * 60 * 60;
+function useCountdown(intervalHours: number) {
+  const intervalMs = intervalHours * 60 * 60 * 1000;
 
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const stored = sessionStorage.getItem('countdown_end');
-    if (stored) {
-      const remaining = Math.floor((parseInt(stored) - Date.now()) / 1000);
-      if (remaining > 0) return remaining;
-    }
-    const end = Date.now() + totalSeconds * 1000;
-    sessionStorage.setItem('countdown_end', end.toString());
-    return totalSeconds;
-  });
+  const getTimeLeft = () => {
+    const remaining = intervalMs - (Date.now() % intervalMs);
+    return Math.floor(remaining / 1000);
+  };
+
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeLeft(t => {
-        if (t <= 1) {
-          const end = Date.now() + totalSeconds * 1000;
-          sessionStorage.setItem('countdown_end', end.toString());
-          return totalSeconds;
-        }
-        return t - 1;
-      });
-    }, 1000);
+    const interval = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
     return () => clearInterval(interval);
-  }, [totalSeconds]);
+  }, [intervalMs]);
 
   const h = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
   const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
