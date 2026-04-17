@@ -13,12 +13,10 @@ import {
   Leaf, Check, Star, X,
   ArrowRight, FlaskConical, Utensils, Clock,
   Waves, TrendingUp, Heart, ExternalLink, ChevronDown,
-  Shield, Gift, Zap, Users, MessageCircle
+  Shield, Gift, Zap, Users
 } from 'lucide-react';
 
 const STRIPE_URL = "https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01";
-const WHATSAPP_NUMBER = "393XXXXXXXXX"; // sostituire con numero reale
-const WHATSAPP_MSG = encodeURIComponent("Ciao! Ho una domanda sull'ebook Pancia Piatta in 21 Giorni 👋");
 
 // --- Data ---
 const studies = [
@@ -292,19 +290,6 @@ function StickyMobileCTA() {
   );
 }
 
-function WhatsAppButton() {
-  return (
-    <a
-      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chatta su WhatsApp"
-      className="fixed bottom-6 right-4 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
-    >
-      <MessageCircle className="w-7 h-7 fill-white" />
-    </a>
-  );
-}
 
 function UrgencyBanner() {
   const { h, m, s } = useCountdown(4);
@@ -336,7 +321,6 @@ function HomePage() {
       <ExitIntentPopup />
       <LivePurchaseNotification />
       <StickyMobileCTA />
-      <WhatsAppButton />
 
       {/* HEADER */}
       <header className="sticky top-0 z-40 bg-beige/90 backdrop-blur-md border-b border-sage/10">
