@@ -5,18 +5,20 @@
 
 import { Routes, Route, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import CookiePolicy from './pages/CookiePolicy';
 import TerminiCondizioni from './pages/TerminiCondizioni';
 import {
-  Leaf, Check, Star,
+  Leaf, Check, Star, X,
   ArrowRight, FlaskConical, Utensils, Clock,
   Waves, TrendingUp, Heart, ExternalLink, ChevronDown,
-  Shield, Gift, Zap, Users
+  Shield, Gift, Zap, Users, MessageCircle
 } from 'lucide-react';
 
 const STRIPE_URL = "https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01";
+const WHATSAPP_NUMBER = "393XXXXXXXXX"; // sostituire con numero reale
+const WHATSAPP_MSG = encodeURIComponent("Ciao! Ho una domanda sull'ebook Pancia Piatta in 21 Giorni 👋");
 
 // --- Data ---
 const studies = [
@@ -87,14 +89,16 @@ const faqItems = [
 ];
 
 const purchaseNotifications = [
-  { name: "Valentina", city: "Milano", time: "2 minuti fa" },
-  { name: "Chiara", city: "Roma", time: "5 minuti fa" },
-  { name: "Serena", city: "Napoli", time: "8 minuti fa" },
-  { name: "Marta", city: "Torino", time: "11 minuti fa" },
-  { name: "Laura", city: "Bologna", time: "14 minuti fa" },
-  { name: "Giulia", city: "Firenze", time: "17 minuti fa" },
-  { name: "Elisa", city: "Palermo", time: "20 minuti fa" },
-  { name: "Sofia", city: "Venezia", time: "23 minuti fa" },
+  { name: "Valentina", city: "Milano" },
+  { name: "Chiara", city: "Roma" },
+  { name: "Serena", city: "Napoli" },
+  { name: "Marta", city: "Torino" },
+  { name: "Laura", city: "Bologna" },
+  { name: "Giulia", city: "Firenze" },
+  { name: "Elisa", city: "Palermo" },
+  { name: "Sofia", city: "Venezia" },
+  { name: "Federica", city: "Bari" },
+  { name: "Irene", city: "Catania" },
 ];
 
 // --- Hooks ---
@@ -120,7 +124,93 @@ function useCountdown(targetHours: number) {
   return { h, m, s, expired: timeLeft === 0 };
 }
 
+function useLiveViewers() {
+  const [count, setCount] = useState(() => 28 + Math.floor(Math.random() * 20));
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(c => {
+        const delta = Math.random() < 0.5 ? 1 : -1;
+        return Math.min(72, Math.max(18, c + delta));
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+  return count;
+}
+
 // --- Components ---
+
+function ExitIntentPopup() {
+  const [visible, setVisible] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  const handleMouseLeave = useCallback((e: MouseEvent) => {
+    if (e.clientY <= 5 && !dismissed) {
+      setVisible(true);
+    }
+  }, [dismissed]);
+
+  useEffect(() => {
+    const alreadySeen = sessionStorage.getItem('exit_popup_seen');
+    if (alreadySeen) { setDismissed(true); return; }
+    const timer = setTimeout(() => {
+      document.addEventListener('mouseleave', handleMouseLeave);
+    }, 15000);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [handleMouseLeave]);
+
+  const close = () => {
+    setVisible(false);
+    setDismissed(true);
+    sessionStorage.setItem('exit_popup_seen', '1');
+  };
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={close}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: 'spring', damping: 20 }}
+            className="bg-beige rounded-[2.5rem] p-10 md:p-14 max-w-lg w-full relative shadow-2xl text-center"
+            onClick={e => e.stopPropagation()}
+          >
+            <button onClick={close} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-brown/5 hover:bg-brown/10 flex items-center justify-center transition-colors">
+              <X className="w-5 h-5 text-brown/50" />
+            </button>
+            <div className="text-5xl mb-6">⏳</div>
+            <h3 className="text-3xl font-serif font-bold text-brown mb-4 leading-tight">Aspetta — stai lasciando l'offerta sul tavolo</h3>
+            <p className="text-brown/70 text-lg mb-3 leading-relaxed">
+              L'ebook è in offerta lancio a <strong className="text-brown">€19,99</strong> invece di €39,99.
+            </p>
+            <p className="text-brown/60 mb-8">L'offerta scade presto. Non tornerà a questo prezzo.</p>
+            <a
+              href={STRIPE_URL}
+              onClick={close}
+              className="cta-pulse bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/30 transition-all flex items-center justify-center gap-3 group mb-5"
+            >
+              Voglio l'Ebook a €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <button onClick={close} className="text-sm text-brown/40 hover:text-brown/60 transition-colors underline">
+              No grazie, rinuncio all'offerta
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 function LivePurchaseNotification() {
   const [visible, setVisible] = useState(false);
@@ -130,32 +220,46 @@ function LivePurchaseNotification() {
     const show = () => {
       setIdx(i => (i + 1) % purchaseNotifications.length);
       setVisible(true);
-      setTimeout(() => setVisible(false), 4000);
+      setTimeout(() => setVisible(false), 4500);
     };
-    const delay = setTimeout(show, 8000);
-    const interval = setInterval(show, 18000);
+    const delay = setTimeout(show, 9000);
+    const interval = setInterval(show, 20000);
     return () => { clearTimeout(delay); clearInterval(interval); };
   }, []);
 
   const n = purchaseNotifications[idx];
+  const minsAgo = 2 + (idx * 3);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0, x: -80, y: 0 }}
+          initial={{ opacity: 0, x: -80 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -80 }}
-          className="fixed bottom-24 left-4 z-50 bg-white border border-sage/20 shadow-2xl rounded-2xl px-5 py-4 flex items-center gap-4 max-w-[280px]"
+          className="fixed bottom-24 left-4 z-50 bg-white border border-sage/20 shadow-2xl rounded-2xl px-5 py-4 flex items-center gap-4 max-w-[290px]"
         >
           <div className="w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center text-xl flex-shrink-0">🛒</div>
           <div>
             <p className="text-sm font-bold text-brown leading-tight"><span className="text-sage">{n.name}</span> di {n.city}</p>
-            <p className="text-xs text-brown/60 font-medium">ha acquistato l'ebook · {n.time}</p>
+            <p className="text-xs text-brown/60 font-medium">ha acquistato l'ebook · {minsAgo} min fa</p>
           </div>
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+function LiveViewersBadge() {
+  const viewers = useLiveViewers();
+  return (
+    <div className="inline-flex items-center gap-2 bg-white border border-sage/15 shadow-md rounded-full px-4 py-2 text-sm font-bold text-brown">
+      <span className="relative flex h-2.5 w-2.5">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+      </span>
+      <span><strong className="text-sage">{viewers}</strong> persone stanno guardando questa pagina ora</span>
+    </div>
   );
 }
 
@@ -178,7 +282,7 @@ function StickyMobileCTA() {
         >
           <a
             href={STRIPE_URL}
-            className="flex items-center justify-center gap-3 bg-sage text-white w-full py-4 rounded-2xl text-base font-black shadow-lg shadow-sage/30"
+            className="cta-pulse flex items-center justify-center gap-3 bg-sage text-white w-full py-4 rounded-2xl text-base font-black shadow-lg shadow-sage/30"
           >
             Scarica l'Ebook — <span className="line-through opacity-60 font-normal text-sm">€39,99</span> €19,99 <ArrowRight className="w-5 h-5" />
           </a>
@@ -188,13 +292,27 @@ function StickyMobileCTA() {
   );
 }
 
+function WhatsAppButton() {
+  return (
+    <a
+      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chatta su WhatsApp"
+      className="fixed bottom-6 right-4 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
+    >
+      <MessageCircle className="w-7 h-7 fill-white" />
+    </a>
+  );
+}
+
 function UrgencyBanner() {
   const { h, m, s } = useCountdown(4);
   return (
     <div className="bg-brown text-white text-center py-3 px-4 text-sm font-bold tracking-wide">
-      <span className="opacity-80">Offerta lancio termina tra:</span>{' '}
+      <span className="opacity-80">🔥 Offerta lancio termina tra:</span>{' '}
       <span className="font-black text-yellow-300 tabular-nums">{h}:{m}:{s}</span>
-      <span className="opacity-80 ml-3">· Prezzo: <span className="line-through opacity-60">€39,99</span> <span className="text-yellow-300">€19,99</span></span>
+      <span className="opacity-80 ml-3">· <span className="line-through opacity-60">€39,99</span> <span className="text-yellow-300">€19,99</span></span>
     </div>
   );
 }
@@ -214,11 +332,11 @@ function HomePage() {
       {/* URGENCY BANNER */}
       <UrgencyBanner />
 
-      {/* LIVE PURCHASE NOTIFICATION */}
+      {/* OVERLAYS */}
+      <ExitIntentPopup />
       <LivePurchaseNotification />
-
-      {/* STICKY MOBILE CTA */}
       <StickyMobileCTA />
+      <WhatsAppButton />
 
       {/* HEADER */}
       <header className="sticky top-0 z-40 bg-beige/90 backdrop-blur-md border-b border-sage/10">
@@ -233,7 +351,7 @@ function HomePage() {
             </a>
             <a
               href={STRIPE_URL}
-              className="hidden sm:flex bg-sage text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-sage-dark shadow-lg shadow-sage/20 items-center gap-2 transition-all"
+              className="hidden sm:flex cta-pulse bg-sage text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-sage-dark shadow-lg shadow-sage/20 items-center gap-2 transition-all"
             >
               Scarica Ora — €19,99 <ArrowRight className="w-4 h-4" />
             </a>
@@ -244,19 +362,23 @@ function HomePage() {
       {/* HERO */}
       <section className="pt-12 pb-20 md:pt-24 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-          <span className="inline-block px-4 py-1.5 bg-sage/10 text-sage rounded-full text-xs font-bold tracking-widest uppercase mb-8">✨ Novità Estate 2026</span>
+          <span className="inline-block px-4 py-1.5 bg-sage/10 text-sage rounded-full text-xs font-bold tracking-widest uppercase mb-6">✨ Novità Estate 2026</span>
           <h1 className="text-5xl md:text-7xl font-serif leading-[1.1] mb-8 text-brown">
             Pancia <span className="italic text-sage">Piatta</span> in 21 Giorni
           </h1>
           <p className="text-xl md:text-2xl text-brown/80 mb-6 leading-relaxed">
             Il piano alimentare estivo che funziona davvero. Basato sulla scienza, progettato per risultati reali.
           </p>
-          <div className="flex items-center gap-3 mb-10">
+          <div className="flex items-center gap-3 mb-6">
             <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
             <span className="text-sm font-bold text-brown/70">4.9/5 · <span className="text-sage">+1.500 donne</span> ci hanno già provato</span>
           </div>
-          <div className="flex flex-col sm:flex-row gap-5 mb-12">
-            <a href={STRIPE_URL} className="bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all flex items-center justify-center gap-3 group">
+          {/* Live viewers */}
+          <div className="mb-10">
+            <LiveViewersBadge />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-5 mb-10">
+            <a href={STRIPE_URL} className="cta-pulse bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all flex items-center justify-center gap-3 group">
               Scarica l'Ebook — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a href="#metodo" className="border-2 border-sage text-sage px-10 py-5 rounded-full text-lg font-bold hover:bg-sage hover:text-white transition-all text-center">
@@ -264,9 +386,9 @@ function HomePage() {
             </a>
           </div>
           <div className="flex flex-wrap gap-4 text-xs font-bold text-brown/50 uppercase tracking-widest mb-12">
-            <span className="flex items-center gap-1.5">🔒 Pagamento sicuro</span>
-            <span className="flex items-center gap-1.5">📧 Ebook immediato</span>
-            <span className="flex items-center gap-1.5">✅ 30gg rimborso garantito</span>
+            <span>🔒 Pagamento sicuro</span>
+            <span>📧 Ebook immediato</span>
+            <span>✅ 30gg rimborso garantito</span>
           </div>
           <div className="grid grid-cols-3 gap-8 border-t border-sage/20 pt-10">
             <div><div className="text-3xl font-serif font-bold text-sage">21</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Giorni</div></div>
@@ -324,6 +446,64 @@ function HomePage() {
             </p>
             <p className="text-white/80 text-lg">Questo ebook è esattamente quello.</p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* PER CHI È / PER CHI NON È */}
+      <section className="py-32 bg-beige">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader title="Questo ebook fa per te?" label="Qualificazione" />
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Per chi È */}
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              className="bg-sage/8 border-2 border-sage/25 rounded-[2.5rem] p-10">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 bg-sage rounded-full flex items-center justify-center flex-shrink-0">
+                  <Check className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-2xl font-serif font-bold text-brown">È per te se...</h3>
+              </div>
+              <ul className="space-y-5">
+                {[
+                  "Vuoi ridurre il gonfiore addominale prima dell'estate",
+                  "Cerchi un piano concreto, non consigli generici",
+                  "Vuoi mangiare bene senza ossessionarti con le calorie",
+                  "Hai poco tempo e vuoi ricette veloci e gustose",
+                  "Vuoi capire *perché* funziona, non solo cosa fare",
+                  "Sei stanca di diete rigide che non reggono più di 2 settimane",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <span className="text-sage font-black mt-0.5 flex-shrink-0">✓</span>
+                    <span className="text-brown/80 font-medium leading-snug">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+            {/* Per chi NON è */}
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              className="bg-brown/5 border-2 border-brown/10 rounded-[2.5rem] p-10">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 bg-brown/15 rounded-full flex items-center justify-center flex-shrink-0">
+                  <X className="w-5 h-5 text-brown/60" />
+                </div>
+                <h3 className="text-2xl font-serif font-bold text-brown">Non è per te se...</h3>
+              </div>
+              <ul className="space-y-5">
+                {[
+                  "Cerchi una pillola magica o una scorciatoia senza impegno",
+                  "Vuoi perdere 10 kg in una settimana (non è realistico)",
+                  "Non sei disposta a cambiare nulla nella tua alimentazione",
+                  "Stai cercando solo esercizi fisici (questo è un piano alimentare)",
+                  "Hai una condizione medica che richiede supervisione specialistica",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <span className="text-brown/40 font-black mt-0.5 flex-shrink-0">✗</span>
+                    <span className="text-brown/60 font-medium leading-snug">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -412,27 +592,45 @@ function HomePage() {
         </div>
       </section>
 
+      {/* MID-PAGE CTA */}
+      <section className="py-16 bg-sage/10 border-y border-sage/15">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <div className="text-left">
+              <p className="text-2xl font-serif font-bold text-brown">Pronta a iniziare?</p>
+              <p className="text-brown/60 font-medium">Accesso immediato · Garanzia 30 giorni</p>
+            </div>
+            <a href={STRIPE_URL} className="cta-pulse flex-shrink-0 bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all flex items-center gap-3 group">
+              Scarica — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
       {/* TESTIMONIANZE */}
       <section id="testimonianze" className="py-32 bg-beige">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Cosa dicono le donne che l'hanno provato" subtitle="Risultati reali da donne reali — non modelle, non influencer." />
           <div className="grid md:grid-cols-3 gap-10 mb-16">
             {[
-              { quote: "Non ci credevo, ma alla fine della prima settimana i jeans mi stavano già meglio. Senza morire di fame.", author: "Giulia M., Napoli", result: "-4 cm di girovita in 21 giorni" },
-              { quote: "Finalmente un piano per la vita reale. Ho mangiato anche la pizza il sabato e ho comunque perso il gonfiore.", author: "Alessia R., Milano", result: "Gonfiore sparito dopo 10 giorni" },
-              { quote: "Gli studi scientifici mi hanno convinto. Non è il solito ebook copia-incolla.", author: "Francesca L., Roma", result: "+3 kg in meno alla fine" }
+              { quote: "Non ci credevo, ma alla fine della prima settimana i jeans mi stavano già meglio. Senza morire di fame.", author: "Giulia M., Napoli", result: "-4 cm di girovita in 21 giorni", initial: "G" },
+              { quote: "Finalmente un piano per la vita reale. Ho mangiato anche la pizza il sabato e ho comunque perso il gonfiore.", author: "Alessia R., Milano", result: "Gonfiore sparito dopo 10 giorni", initial: "A" },
+              { quote: "Gli studi scientifici mi hanno convinto. Non è il solito ebook copia-incolla.", author: "Francesca L., Roma", result: "+3 kg in meno alla fine", initial: "F" }
             ].map((testimonial, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white p-10 rounded-[2.5rem] border border-sage/15 shadow-lg relative">
-                <div className="flex gap-1.5 mb-8">{[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />)}</div>
-                <blockquote className="text-2xl font-serif italic mb-10 leading-relaxed text-brown">"{testimonial.quote}"</blockquote>
-                <div className="flex items-center justify-between pt-8 border-t border-sage/10">
-                  <div className="text-sm font-black text-brown/50 uppercase tracking-widest">{testimonial.author}</div>
-                  <div className="bg-sage text-white px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest shadow-md">{testimonial.result}</div>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-14 h-14 rounded-full bg-sage/20 flex items-center justify-center text-2xl font-black text-sage flex-shrink-0">{testimonial.initial}</div>
+                  <div>
+                    <div className="flex gap-1 mb-1">{[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}</div>
+                    <p className="text-sm font-black text-brown/50 uppercase tracking-widest">{testimonial.author}</p>
+                  </div>
                 </div>
+                <blockquote className="text-xl font-serif italic mb-8 leading-relaxed text-brown">"{testimonial.quote}"</blockquote>
+                <div className="bg-sage text-white px-4 py-2 rounded-full text-[11px] font-black uppercase tracking-widest shadow-md inline-block">{testimonial.result}</div>
               </motion.div>
             ))}
           </div>
-          {/* Mini-testimonials */}
+          {/* Mini-testimonianze */}
           <div className="grid md:grid-cols-2 gap-6">
             {[
               { quote: "Pensavo fosse la solita roba. Invece al giorno 7 mi sono guardata allo specchio e ho notato la differenza.", author: "Roberta T., Bari" },
@@ -506,7 +704,7 @@ function HomePage() {
               </div>
             </div>
 
-            <a href={STRIPE_URL} target="_blank" rel="noopener" className="bg-white text-sage px-16 py-8 rounded-full text-2xl md:text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-8 group w-fit">
+            <a href={STRIPE_URL} target="_blank" rel="noopener" className="cta-pulse-white bg-white text-sage px-16 py-8 rounded-full text-2xl md:text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-8 group w-fit">
               Scarica Ora <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
             </a>
             <div className="flex flex-wrap justify-center gap-8 text-sm font-bold text-white/80 uppercase tracking-widest mb-8">
@@ -536,10 +734,9 @@ function HomePage() {
               </motion.div>
             ))}
           </div>
-          {/* CTA sotto FAQ */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-16 text-center">
             <p className="text-brown/70 text-lg mb-6">Ancora indecisa? Ricorda: hai 30 giorni per chiedere il rimborso.</p>
-            <a href={STRIPE_URL} className="inline-flex items-center gap-3 bg-sage text-white px-12 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all group">
+            <a href={STRIPE_URL} className="cta-pulse inline-flex items-center gap-3 bg-sage text-white px-12 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all group">
               Scarica l'Ebook — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>
