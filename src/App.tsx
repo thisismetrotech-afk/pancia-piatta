@@ -4,15 +4,19 @@
  */
 
 import { Routes, Route, Link } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect } from 'react';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import CookiePolicy from './pages/CookiePolicy';
 import TerminiCondizioni from './pages/TerminiCondizioni';
 import {
   Leaf, Check, Star,
   ArrowRight, FlaskConical, Utensils, Clock,
-  Waves, TrendingUp, Heart, ExternalLink, ChevronDown
+  Waves, TrendingUp, Heart, ExternalLink, ChevronDown,
+  Shield, Gift, Zap, Users
 } from 'lucide-react';
+
+const STRIPE_URL = "https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01";
 
 // --- Data ---
 const studies = [
@@ -78,10 +82,122 @@ const faqItems = [
   { q: "Funziona anche se mangio fuori casa spesso?", a: "Sì, l'ebook ha una sezione dedicata per ristoranti, bar e pranzi di lavoro." },
   { q: "In quanto tempo vedo i risultati?", a: "Riduzione del gonfiore già nella prima settimana. Girovita ridotto entro 21 giorni." },
   { q: "Posso seguirlo da vegetariana/vegana?", a: "Sì con le sostituzioni indicate nell'ebook per ogni pasto proteico." },
-  { q: "Come ricevo l'ebook?", a: "Email immediata con link ebook dopo l'acquisto. Nessuna attesa." }
+  { q: "Come ricevo l'ebook?", a: "Email immediata con link ebook dopo l'acquisto. Nessuna attesa." },
+  { q: "E se non sono soddisfatta?", a: "Hai 30 giorni di garanzia soddisfatta o rimborsata. Nessuna domanda, rimborso immediato." }
 ];
 
+const purchaseNotifications = [
+  { name: "Valentina", city: "Milano", time: "2 minuti fa" },
+  { name: "Chiara", city: "Roma", time: "5 minuti fa" },
+  { name: "Serena", city: "Napoli", time: "8 minuti fa" },
+  { name: "Marta", city: "Torino", time: "11 minuti fa" },
+  { name: "Laura", city: "Bologna", time: "14 minuti fa" },
+  { name: "Giulia", city: "Firenze", time: "17 minuti fa" },
+  { name: "Elisa", city: "Palermo", time: "20 minuti fa" },
+  { name: "Sofia", city: "Venezia", time: "23 minuti fa" },
+];
+
+// --- Hooks ---
+
+function useCountdown(targetHours: number) {
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const stored = sessionStorage.getItem('countdown_end');
+    if (stored) return Math.max(0, Math.floor((parseInt(stored) - Date.now()) / 1000));
+    const end = Date.now() + targetHours * 60 * 60 * 1000;
+    sessionStorage.setItem('countdown_end', end.toString());
+    return targetHours * 60 * 60;
+  });
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const interval = setInterval(() => setTimeLeft(t => Math.max(0, t - 1)), 1000);
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
+  const h = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
+  const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
+  const s = (timeLeft % 60).toString().padStart(2, '0');
+  return { h, m, s, expired: timeLeft === 0 };
+}
+
 // --- Components ---
+
+function LivePurchaseNotification() {
+  const [visible, setVisible] = useState(false);
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const show = () => {
+      setIdx(i => (i + 1) % purchaseNotifications.length);
+      setVisible(true);
+      setTimeout(() => setVisible(false), 4000);
+    };
+    const delay = setTimeout(show, 8000);
+    const interval = setInterval(show, 18000);
+    return () => { clearTimeout(delay); clearInterval(interval); };
+  }, []);
+
+  const n = purchaseNotifications[idx];
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, x: -80, y: 0 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -80 }}
+          className="fixed bottom-24 left-4 z-50 bg-white border border-sage/20 shadow-2xl rounded-2xl px-5 py-4 flex items-center gap-4 max-w-[280px]"
+        >
+          <div className="w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center text-xl flex-shrink-0">🛒</div>
+          <div>
+            <p className="text-sm font-bold text-brown leading-tight"><span className="text-sage">{n.name}</span> di {n.city}</p>
+            <p className="text-xs text-brown/60 font-medium">ha acquistato l'ebook · {n.time}</p>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function StickyMobileCTA() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ y: 100 }}
+          animate={{ y: 0 }}
+          exit={{ y: 100 }}
+          className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-white border-t border-sage/20 shadow-2xl p-4"
+        >
+          <a
+            href={STRIPE_URL}
+            className="flex items-center justify-center gap-3 bg-sage text-white w-full py-4 rounded-2xl text-base font-black shadow-lg shadow-sage/30"
+          >
+            Scarica l'Ebook — <span className="line-through opacity-60 font-normal text-sm">€39,99</span> €19,99 <ArrowRight className="w-5 h-5" />
+          </a>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function UrgencyBanner() {
+  const { h, m, s } = useCountdown(4);
+  return (
+    <div className="bg-brown text-white text-center py-3 px-4 text-sm font-bold tracking-wide">
+      <span className="opacity-80">Offerta lancio termina tra:</span>{' '}
+      <span className="font-black text-yellow-300 tabular-nums">{h}:{m}:{s}</span>
+      <span className="opacity-80 ml-3">· Prezzo: <span className="line-through opacity-60">€39,99</span> <span className="text-yellow-300">€19,99</span></span>
+    </div>
+  );
+}
 
 const SectionHeader = ({ title, subtitle, label }: { title: string, subtitle?: string, label?: string }) => (
   <div className="text-center mb-16 px-4">
@@ -94,23 +210,32 @@ const SectionHeader = ({ title, subtitle, label }: { title: string, subtitle?: s
 function HomePage() {
   return (
     <div id="top" className="min-h-screen bg-beige text-brown selection:bg-sage selection:text-white">
-      {/* HEADER SEMPLIFICATO */}
-      <header className="sticky top-0 z-50 bg-beige/90 backdrop-blur-md border-b border-sage/10">
+
+      {/* URGENCY BANNER */}
+      <UrgencyBanner />
+
+      {/* LIVE PURCHASE NOTIFICATION */}
+      <LivePurchaseNotification />
+
+      {/* STICKY MOBILE CTA */}
+      <StickyMobileCTA />
+
+      {/* HEADER */}
+      <header className="sticky top-0 z-40 bg-beige/90 backdrop-blur-md border-b border-sage/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
           <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Leaf className="w-8 h-8 text-sage" fill="currentColor" />
             <span className="text-2xl font-serif font-bold text-brown">PanciaPiatta</span>
           </a>
-
           <div className="flex items-center gap-4">
             <a href="mailto:panciapiattainfo@gmail.com" className="hidden md:block text-sm font-bold text-brown/60 hover:text-sage transition-colors">
               panciapiattainfo@gmail.com
             </a>
             <a
-              href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01"
+              href={STRIPE_URL}
               className="hidden sm:flex bg-sage text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-sage-dark shadow-lg shadow-sage/20 items-center gap-2 transition-all"
             >
-              Scarica Ora <ArrowRight className="w-4 h-4" />
+              Scarica Ora — €19,99 <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -123,16 +248,25 @@ function HomePage() {
           <h1 className="text-5xl md:text-7xl font-serif leading-[1.1] mb-8 text-brown">
             Pancia <span className="italic text-sage">Piatta</span> in 21 Giorni
           </h1>
-          <p className="text-xl md:text-2xl text-brown/80 mb-12 leading-relaxed">
+          <p className="text-xl md:text-2xl text-brown/80 mb-6 leading-relaxed">
             Il piano alimentare estivo che funziona davvero. Basato sulla scienza, progettato per risultati reali.
           </p>
-          <div className="flex flex-col sm:flex-row gap-5 mb-16">
-            <a href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01" className="bg-sage text-white px-10 py-5 rounded-full text-lg font-bold hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all">
-              Scarica l'Ebook — €19,99
+          <div className="flex items-center gap-3 mb-10">
+            <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
+            <span className="text-sm font-bold text-brown/70">4.9/5 · <span className="text-sage">+1.500 donne</span> ci hanno già provato</span>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-5 mb-12">
+            <a href={STRIPE_URL} className="bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all flex items-center justify-center gap-3 group">
+              Scarica l'Ebook — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a href="#metodo" className="border-2 border-sage text-sage px-10 py-5 rounded-full text-lg font-bold hover:bg-sage hover:text-white transition-all text-center">
               Scopri il metodo ↓
             </a>
+          </div>
+          <div className="flex flex-wrap gap-4 text-xs font-bold text-brown/50 uppercase tracking-widest mb-12">
+            <span className="flex items-center gap-1.5">🔒 Pagamento sicuro</span>
+            <span className="flex items-center gap-1.5">📧 Ebook immediato</span>
+            <span className="flex items-center gap-1.5">✅ 30gg rimborso garantito</span>
           </div>
           <div className="grid grid-cols-3 gap-8 border-t border-sage/20 pt-10">
             <div><div className="text-3xl font-serif font-bold text-sage">21</div><div className="text-xs uppercase tracking-widest font-bold text-brown/50 mt-1">Giorni</div></div>
@@ -156,6 +290,41 @@ function HomePage() {
             <p className="text-xs font-bold text-brown/50 uppercase tracking-widest mt-2">— Tiziana Marletta</p>
           </div>
         </motion.div>
+      </section>
+
+      {/* PAIN SECTION */}
+      <section className="py-20 bg-brown text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <span className="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase mb-8 text-white/80">Ti riconosci?</span>
+            <h2 className="text-4xl md:text-5xl font-serif mb-12 leading-tight">
+              Hai già provato tutto<br />— ma la pancia non sparisce
+            </h2>
+          </motion.div>
+          <div className="grid md:grid-cols-2 gap-6 text-left mb-14">
+            {[
+              { icon: "😩", text: "Hai fatto diete e dopo qualche settimana hai mollato tutto" },
+              { icon: "👗", text: "I vestiti dell'estate scorsa non chiudono più come prima" },
+              { icon: "🤰", text: "La sera la pancia è gonfia anche se hai mangiato poco" },
+              { icon: "😤", text: "Segui influencer fitness ma i loro metodi non funzionano per te" },
+              { icon: "📋", text: "Non sai cosa mangiare senza sentirti in colpa ogni giorno" },
+              { icon: "🏖️", text: "L'estate si avvicina e ti senti ancora lontana dalla forma che vuoi" },
+            ].map((item, idx) => (
+              <motion.div key={idx} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08 }}
+                className="flex items-start gap-4 bg-white/5 border border-white/10 rounded-2xl p-5">
+                <span className="text-2xl">{item.icon}</span>
+                <p className="text-white/85 font-medium leading-snug">{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="bg-sage rounded-3xl p-8 md:p-12">
+            <p className="text-2xl md:text-3xl font-serif font-bold leading-tight mb-4">
+              Non è colpa tua. È che nessuno ti ha mai dato un piano vero — basato sulla scienza, fatto per la vita reale.
+            </p>
+            <p className="text-white/80 text-lg">Questo ebook è esattamente quello.</p>
+          </motion.div>
+        </div>
       </section>
 
       {/* METODO */}
@@ -246,8 +415,8 @@ function HomePage() {
       {/* TESTIMONIANZE */}
       <section id="testimonianze" className="py-32 bg-beige">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader title="Cosa dicono le donne che l'hanno provato" />
-          <div className="grid md:grid-cols-3 gap-10">
+          <SectionHeader title="Cosa dicono le donne che l'hanno provato" subtitle="Risultati reali da donne reali — non modelle, non influencer." />
+          <div className="grid md:grid-cols-3 gap-10 mb-16">
             {[
               { quote: "Non ci credevo, ma alla fine della prima settimana i jeans mi stavano già meglio. Senza morire di fame.", author: "Giulia M., Napoli", result: "-4 cm di girovita in 21 giorni" },
               { quote: "Finalmente un piano per la vita reale. Ho mangiato anche la pizza il sabato e ho comunque perso il gonfiore.", author: "Alessia R., Milano", result: "Gonfiore sparito dopo 10 giorni" },
@@ -263,6 +432,41 @@ function HomePage() {
               </motion.div>
             ))}
           </div>
+          {/* Mini-testimonials */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { quote: "Pensavo fosse la solita roba. Invece al giorno 7 mi sono guardata allo specchio e ho notato la differenza.", author: "Roberta T., Bari" },
+              { quote: "La lista della spesa inclusa è geniale. Compro tutto in un colpo solo, nessun ingrediente strano.", author: "Monica S., Verona" },
+              { quote: "Ho seguito il piano anche mangiando fuori 3 volte a settimana. Funziona davvero.", author: "Ilaria B., Genova" },
+              { quote: "30 giorni di garanzia? Mi ha convinto a provare. Non ho avuto bisogno del rimborso.", author: "Daniela C., Catania" },
+            ].map((t, idx) => (
+              <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08 }}
+                className="bg-white border border-sage/10 rounded-2xl p-6 flex gap-4 items-start shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center text-sage font-black text-lg">{t.author[0]}</div>
+                <div>
+                  <p className="text-brown/80 italic mb-2 leading-snug">"{t.quote}"</p>
+                  <p className="text-xs font-black text-brown/40 uppercase tracking-widest">— {t.author}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GARANZIA */}
+      <section className="py-20 bg-cream">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="bg-white border-2 border-sage/20 rounded-[2.5rem] p-10 md:p-14 text-center shadow-xl">
+            <div className="w-20 h-20 bg-sage/10 rounded-full flex items-center justify-center mx-auto mb-8">
+              <Shield className="w-10 h-10 text-sage" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 text-brown">Garanzia 30 Giorni</h2>
+            <p className="text-xl text-brown/75 leading-relaxed mb-8">
+              Se entro 30 giorni dall'acquisto non sei soddisfatta — per qualsiasi motivo — ti rimborsiamo tutto. <strong className="text-brown">Senza domande, senza scuse.</strong>
+            </p>
+            <p className="text-sm font-bold text-sage uppercase tracking-widest">Rischio zero. Solo risultati.</p>
+          </motion.div>
         </div>
       </section>
 
@@ -271,21 +475,46 @@ function HomePage() {
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')] opacity-15"></div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
-            <span className="inline-block px-6 py-2 bg-white/20 rounded-full text-xs font-black tracking-[0.2em] uppercase mb-10">🛒 Offerta Lancio</span>
-            <h2 className="text-6xl md:text-8xl font-serif mb-8 leading-tight">Prendi l'Ebook Adesso</h2>
-            <p className="text-xl md:text-3xl text-white/90 mb-16 font-medium leading-relaxed">Piano completo, 6 studi scientifici, 5 ricette bonus. Ebook immediato.</p>
-            <div className="mb-16 flex items-center justify-center gap-8">
-              <span className="text-3xl line-through opacity-60 font-serif">€39,99</span>
-              <span className="text-7xl md:text-9xl font-serif font-black">€19,99</span>
+            <span className="inline-block px-6 py-2 bg-white/20 rounded-full text-xs font-black tracking-[0.2em] uppercase mb-10">🛒 Offerta Lancio Estate 2026</span>
+            <h2 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">Prendi l'Ebook Adesso</h2>
+            <p className="text-xl md:text-2xl text-white/90 mb-10 font-medium leading-relaxed">Piano completo, 6 studi scientifici, 5 ricette bonus. Ebook immediato.</p>
+
+            {/* Value Stack */}
+            <div className="bg-white/10 border border-white/20 rounded-3xl p-8 mb-12 text-left max-w-xl mx-auto">
+              <p className="text-sm font-black uppercase tracking-widest text-white/70 mb-6 text-center">Cosa ricevi oggi</p>
+              {[
+                { icon: <Utensils className="w-5 h-5" />, item: "Piano pasti 21 giorni completo", value: "€25" },
+                { icon: <FlaskConical className="w-5 h-5" />, item: "6 studi scientifici spiegati", value: "€15" },
+                { icon: <Zap className="w-5 h-5" />, item: "5 ricette sgonfianti in 15 minuti", value: "€10" },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus: tisana sgonfiante serale", value: "Gratis" },
+                { icon: <Users className="w-5 h-5" />, item: "Guida mangiare fuori casa", value: "Gratis" },
+              ].map((row, idx) => (
+                <div key={idx} className="flex items-center justify-between py-3 border-b border-white/10 last:border-0">
+                  <div className="flex items-center gap-3 text-white/90">
+                    <div className="opacity-70">{row.icon}</div>
+                    <span className="font-medium text-sm">{row.item}</span>
+                  </div>
+                  <span className="text-sm font-black text-yellow-300">{row.value}</span>
+                </div>
+              ))}
+              <div className="flex items-center justify-between pt-5 mt-2">
+                <span className="font-black uppercase tracking-widest text-sm">Valore totale</span>
+                <div className="flex items-center gap-3">
+                  <span className="text-xl line-through opacity-50 font-serif">€50+</span>
+                  <span className="text-3xl font-black text-yellow-300 font-serif">€19,99</span>
+                </div>
+              </div>
             </div>
-            <a href="https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01" target="_blank" rel="noopener" className="bg-white text-sage px-16 py-8 rounded-full text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-12 group">
+
+            <a href={STRIPE_URL} target="_blank" rel="noopener" className="bg-white text-sage px-16 py-8 rounded-full text-2xl md:text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-8 group w-fit">
               Scarica Ora <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
             </a>
-            <div className="flex flex-wrap justify-center gap-10 text-sm font-bold text-white/80 uppercase tracking-widest">
-              <span className="flex items-center gap-2">🔒 Pagamento sicuro</span>
-              <span className="flex items-center gap-2">📄 Ebook istantaneo</span>
-              <span className="flex items-center gap-2">✅ 30gg Garanzia</span>
+            <div className="flex flex-wrap justify-center gap-8 text-sm font-bold text-white/80 uppercase tracking-widest mb-8">
+              <span>🔒 Pagamento sicuro Stripe</span>
+              <span>📄 Ebook immediato via email</span>
+              <span>✅ 30gg Garanzia rimborso</span>
             </div>
+            <p className="text-white/50 text-xs">Accesso immediato dopo l'acquisto. Compatibile con tutti i dispositivi.</p>
           </motion.div>
         </div>
       </section>
@@ -307,6 +536,13 @@ function HomePage() {
               </motion.div>
             ))}
           </div>
+          {/* CTA sotto FAQ */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-16 text-center">
+            <p className="text-brown/70 text-lg mb-6">Ancora indecisa? Ricorda: hai 30 giorni per chiedere il rimborso.</p>
+            <a href={STRIPE_URL} className="inline-flex items-center gap-3 bg-sage text-white px-12 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all group">
+              Scarica l'Ebook — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </motion.div>
         </div>
       </section>
 
