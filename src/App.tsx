@@ -18,6 +18,16 @@ import {
 
 const STRIPE_URL = "https://buy.stripe.com/eVq9ALcvjczA9332CsgYU01";
 
+function trackCheckout() {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'InitiateCheckout', {
+      value: 19.99,
+      currency: 'EUR',
+      content_name: 'Pancia Piatta in 21 Giorni',
+    });
+  }
+}
+
 // --- Data ---
 const studies = [
   {
@@ -208,7 +218,7 @@ function ExitIntentPopup() {
             <p className="text-brown/60 mb-8">L'offerta scade presto. Non tornerà a questo prezzo.</p>
             <a
               href={STRIPE_URL}
-              onClick={close}
+              onClick={() => { trackCheckout(); close(); }}
               className="cta-pulse bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/30 transition-all flex items-center justify-center gap-3 group mb-5"
             >
               Voglio l'Ebook a €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -293,6 +303,7 @@ function StickyMobileCTA() {
         >
           <a
             href={STRIPE_URL}
+            onClick={trackCheckout}
             className="cta-pulse flex items-center justify-center gap-3 bg-sage text-white w-full py-4 rounded-2xl text-base font-black shadow-lg shadow-sage/30"
           >
             Scarica l'Ebook — <span className="line-through opacity-60 font-normal text-sm">€39,99</span> €19,99 <ArrowRight className="w-5 h-5" />
@@ -302,7 +313,6 @@ function StickyMobileCTA() {
     </AnimatePresence>
   );
 }
-
 
 function UrgencyBanner() {
   const { h, m, s } = useCountdown(4);
@@ -327,10 +337,7 @@ function HomePage() {
   return (
     <div id="top" className="min-h-screen bg-beige text-brown selection:bg-sage selection:text-white">
 
-      {/* URGENCY BANNER */}
       <UrgencyBanner />
-
-      {/* OVERLAYS */}
       <ExitIntentPopup />
       <LivePurchaseNotification />
       <StickyMobileCTA />
@@ -348,6 +355,7 @@ function HomePage() {
             </a>
             <a
               href={STRIPE_URL}
+              onClick={trackCheckout}
               className="hidden sm:flex cta-pulse bg-sage text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-sage-dark shadow-lg shadow-sage/20 items-center gap-2 transition-all"
             >
               Scarica Ora — €19,99 <ArrowRight className="w-4 h-4" />
@@ -370,12 +378,15 @@ function HomePage() {
             <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
             <span className="text-sm font-bold text-brown/70">4.9/5 · <span className="text-sage">+1.500 donne</span> ci hanno già provato</span>
           </div>
-          {/* Live viewers */}
           <div className="mb-10">
             <LiveViewersBadge />
           </div>
           <div className="flex flex-col sm:flex-row gap-5 mb-10">
-            <a href={STRIPE_URL} className="cta-pulse bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all flex items-center justify-center gap-3 group">
+            <a
+              href={STRIPE_URL}
+              onClick={trackCheckout}
+              className="cta-pulse bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-2xl shadow-sage/30 text-center transition-all flex items-center justify-center gap-3 group"
+            >
               Scarica l'Ebook — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a href="#metodo" className="border-2 border-sage text-sage px-10 py-5 rounded-full text-lg font-bold hover:bg-sage hover:text-white transition-all text-center">
@@ -451,7 +462,6 @@ function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Questo ebook fa per te?" label="Qualificazione" />
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Per chi È */}
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="bg-sage/8 border-2 border-sage/25 rounded-[2.5rem] p-10">
               <div className="flex items-center gap-3 mb-8">
@@ -466,7 +476,7 @@ function HomePage() {
                   "Cerchi un piano concreto, non consigli generici",
                   "Vuoi mangiare bene senza ossessionarti con le calorie",
                   "Hai poco tempo e vuoi ricette veloci e gustose",
-                  "Vuoi capire *perché* funziona, non solo cosa fare",
+                  "Vuoi capire perché funziona, non solo cosa fare",
                   "Sei stanca di diete rigide che non reggono più di 2 settimane",
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3">
@@ -476,7 +486,6 @@ function HomePage() {
                 ))}
               </ul>
             </motion.div>
-            {/* Per chi NON è */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="bg-brown/5 border-2 border-brown/10 rounded-[2.5rem] p-10">
               <div className="flex items-center gap-3 mb-8">
@@ -597,7 +606,11 @@ function HomePage() {
               <p className="text-2xl font-serif font-bold text-brown">Pronta a iniziare?</p>
               <p className="text-brown/60 font-medium">Accesso immediato · Garanzia 30 giorni</p>
             </div>
-            <a href={STRIPE_URL} className="cta-pulse flex-shrink-0 bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all flex items-center gap-3 group">
+            <a
+              href={STRIPE_URL}
+              onClick={trackCheckout}
+              className="cta-pulse flex-shrink-0 bg-sage text-white px-10 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all flex items-center gap-3 group"
+            >
               Scarica — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>
@@ -627,7 +640,6 @@ function HomePage() {
               </motion.div>
             ))}
           </div>
-          {/* Mini-testimonianze */}
           <div className="grid md:grid-cols-2 gap-6">
             {[
               { quote: "Pensavo fosse la solita roba. Invece al giorno 7 mi sono guardata allo specchio e ho notato la differenza.", author: "Roberta T., Bari" },
@@ -674,7 +686,6 @@ function HomePage() {
             <h2 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">Prendi l'Ebook Adesso</h2>
             <p className="text-xl md:text-2xl text-white/90 mb-10 font-medium leading-relaxed">Piano completo, 6 studi scientifici, 5 ricette bonus. Ebook immediato.</p>
 
-            {/* Value Stack */}
             <div className="bg-white/10 border border-white/20 rounded-3xl p-8 mb-12 text-left max-w-xl mx-auto">
               <p className="text-sm font-black uppercase tracking-widest text-white/70 mb-6 text-center">Cosa ricevi oggi</p>
               {[
@@ -701,7 +712,13 @@ function HomePage() {
               </div>
             </div>
 
-            <a href={STRIPE_URL} target="_blank" rel="noopener" className="cta-pulse-white bg-white text-sage px-16 py-8 rounded-full text-2xl md:text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-8 group w-fit">
+            <a
+              href={STRIPE_URL}
+              onClick={trackCheckout}
+              target="_blank"
+              rel="noopener"
+              className="cta-pulse-white bg-white text-sage px-16 py-8 rounded-full text-2xl md:text-3xl font-black hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto mb-8 group w-fit"
+            >
               Scarica Ora <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
             </a>
             <div className="flex flex-wrap justify-center gap-8 text-sm font-bold text-white/80 uppercase tracking-widest mb-8">
@@ -733,7 +750,11 @@ function HomePage() {
           </div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-16 text-center">
             <p className="text-brown/70 text-lg mb-6">Ancora indecisa? Ricorda: hai 30 giorni per chiedere il rimborso.</p>
-            <a href={STRIPE_URL} className="cta-pulse inline-flex items-center gap-3 bg-sage text-white px-12 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all group">
+            <a
+              href={STRIPE_URL}
+              onClick={trackCheckout}
+              className="cta-pulse inline-flex items-center gap-3 bg-sage text-white px-12 py-5 rounded-full text-lg font-black hover:bg-sage-dark shadow-xl shadow-sage/25 transition-all group"
+            >
               Scarica l'Ebook — €19,99 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>
