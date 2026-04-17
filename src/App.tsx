@@ -102,24 +102,37 @@ const purchaseNotifications = [
 // --- Hooks ---
 
 function useCountdown(targetHours: number) {
+  const totalSeconds = targetHours * 60 * 60;
+
   const [timeLeft, setTimeLeft] = useState(() => {
     const stored = sessionStorage.getItem('countdown_end');
-    if (stored) return Math.max(0, Math.floor((parseInt(stored) - Date.now()) / 1000));
-    const end = Date.now() + targetHours * 60 * 60 * 1000;
+    if (stored) {
+      const remaining = Math.floor((parseInt(stored) - Date.now()) / 1000);
+      if (remaining > 0) return remaining;
+    }
+    const end = Date.now() + totalSeconds * 1000;
     sessionStorage.setItem('countdown_end', end.toString());
-    return targetHours * 60 * 60;
+    return totalSeconds;
   });
 
   useEffect(() => {
-    if (timeLeft <= 0) return;
-    const interval = setInterval(() => setTimeLeft(t => Math.max(0, t - 1)), 1000);
+    const interval = setInterval(() => {
+      setTimeLeft(t => {
+        if (t <= 1) {
+          const end = Date.now() + totalSeconds * 1000;
+          sessionStorage.setItem('countdown_end', end.toString());
+          return totalSeconds;
+        }
+        return t - 1;
+      });
+    }, 1000);
     return () => clearInterval(interval);
-  }, [timeLeft]);
+  }, [totalSeconds]);
 
   const h = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
   const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
   const s = (timeLeft % 60).toString().padStart(2, '0');
-  return { h, m, s, expired: timeLeft === 0 };
+  return { h, m, s };
 }
 
 function useLiveViewers() {
