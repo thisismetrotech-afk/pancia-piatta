@@ -351,6 +351,143 @@ const SectionHeader = ({ title, subtitle, label }: { title: string, subtitle?: s
   </div>
 );
 
+function EbookMockup({ showBonuses = true }: { showBonuses?: boolean }) {
+  const bonuses = [
+    { num: 1, title: "Piano Alimentare Semplice", tag: "Settimana per settimana" },
+    { num: 2, title: "Riattiva il Metabolismo", tag: "Strategie naturali" },
+    { num: 3, title: "Routine Anti Gonfiore", tag: "10 minuti al giorno" },
+    { num: 4, title: "Piano di Movimento Leggero", tag: "Senza palestra" },
+  ];
+
+  const leaf = (
+    <svg viewBox="0 0 40 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2C20 2 4 16 4 34C4 48 11 56 20 58C29 56 36 48 36 34C36 16 20 2 20 2Z" />
+    </svg>
+  );
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', width: '100%' }}>
+
+      {/* LIBRO PRINCIPALE */}
+      <div style={{
+        aspectRatio: '5/7',
+        background: 'linear-gradient(150deg, #4a7c59 0%, #3a6347 45%, #2a4d38 100%)',
+        borderRadius: '1.5rem',
+        padding: '1.75rem',
+        boxShadow: '0 25px 60px rgba(42,77,56,0.45), 0 8px 20px rgba(0,0,0,0.15)',
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}>
+        {/* cerchi decorativi sfondo */}
+        <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '220px', height: '220px', borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
+        <div style={{ position: 'absolute', bottom: '-80px', left: '-40px', width: '260px', height: '260px', borderRadius: '50%', background: 'rgba(255,255,255,0.03)' }} />
+
+        {/* foglie decorative */}
+        <div style={{ position: 'absolute', top: '0.5rem', right: '0.75rem', color: 'rgba(255,255,255,0.1)', width: '55px', height: '85px' }}>{leaf}</div>
+        <div style={{ position: 'absolute', top: '1.8rem', right: '2.2rem', color: 'rgba(255,255,255,0.06)', width: '38px', height: '58px', transform: 'rotate(-22deg)' }}>{leaf}</div>
+        <div style={{ position: 'absolute', bottom: '2rem', left: '-8px', color: 'rgba(255,255,255,0.07)', width: '65px', height: '100px', transform: 'rotate(28deg)' }}>{leaf}</div>
+
+        {/* TOP */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{
+            display: 'inline-block', background: 'rgba(255,255,255,0.14)', borderRadius: '2rem',
+            padding: '0.2rem 0.7rem', color: 'rgba(255,255,255,0.9)',
+            fontSize: '0.52rem', letterSpacing: '0.15em', textTransform: 'uppercase',
+            fontWeight: 700, fontFamily: 'Work Sans, sans-serif', marginBottom: '1.1rem',
+          }}>✨ Piano Alimentare · Estate 2026</div>
+
+          <h2 style={{
+            color: 'white', fontFamily: 'Playfair Display, serif',
+            fontSize: 'clamp(1.5rem, 4vw, 2.4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '0.7rem',
+          }}>
+            Pancia <em style={{ color: '#a8d4b4', fontStyle: 'italic' }}>Piatta</em>
+            <br /><span style={{ fontSize: '0.82em', fontWeight: 400 }}>in 21 Giorni</span>
+          </h2>
+
+          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.62rem', lineHeight: 1.6, maxWidth: '85%', fontFamily: 'Work Sans, sans-serif' }}>
+            Il piano scientifico che riduce il gonfiore e trasforma il tuo corpo in meno di un mese.
+          </p>
+        </div>
+
+        {/* SEPARATORE */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', position: 'relative', zIndex: 1 }}>
+          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.12)' }} />
+          <span style={{ color: 'rgba(255,255,255,0.22)', fontSize: '1rem' }}>🌿</span>
+          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.12)' }} />
+        </div>
+
+        {/* BOTTOM */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', gap: '3px', marginBottom: '0.45rem' }}>
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} width="11" height="11" fill="#f59e0b" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+            <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.52rem', marginLeft: '3px', alignSelf: 'center', fontFamily: 'Work Sans, sans-serif' }}>4.9 · +1.500 donne</span>
+          </div>
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '0.65rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <div style={{ color: 'rgba(255,255,255,0.88)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'Work Sans, sans-serif' }}>PanciaPiatta</div>
+              <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.48rem', letterSpacing: '0.07em', fontFamily: 'Work Sans, sans-serif' }}>stopgonfiore.it</div>
+            </div>
+            <div style={{
+              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.18)',
+              borderRadius: '0.5rem', padding: '0.2rem 0.45rem',
+              color: 'rgba(255,255,255,0.75)', fontSize: '0.48rem', fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'Work Sans, sans-serif',
+            }}>🔒 Garanzia 30gg</div>
+          </div>
+        </div>
+      </div>
+
+      {/* GRIGLIA BONUS */}
+      {showBonuses && (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+          {bonuses.map((bonus) => (
+            <div key={bonus.num} style={{
+              aspectRatio: '3/4',
+              background: 'linear-gradient(160deg, #fef6e8 0%, #fdf0d5 100%)',
+              borderRadius: '1rem',
+              overflow: 'hidden',
+              boxShadow: '0 6px 20px rgba(42,31,20,0.07)',
+              display: 'flex',
+              flexDirection: 'column',
+              border: '1px solid rgba(74,124,89,0.13)',
+            }}>
+              {/* header sage */}
+              <div style={{ background: 'linear-gradient(135deg, #4a7c59, #3a6347)', padding: '0.45rem 0.6rem', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '-12px', right: '-10px', color: 'rgba(255,255,255,0.08)', width: '38px', height: '58px' }}>{leaf}</div>
+                <div style={{
+                  display: 'inline-block', background: 'rgba(255,255,255,0.18)', borderRadius: '1rem',
+                  padding: '0.1rem 0.4rem', color: 'white',
+                  fontSize: '0.43rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'Work Sans, sans-serif',
+                }}>BONUS {bonus.num}</div>
+              </div>
+
+              {/* contenuto */}
+              <div style={{ padding: '0.55rem 0.6rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ fontSize: '0.85rem', marginBottom: '0.3rem' }}>🌿</div>
+                  <p style={{ color: '#2a1f14', fontSize: '0.58rem', fontFamily: 'Playfair Display, serif', fontWeight: 700, lineHeight: 1.3 }}>
+                    {bonus.title}
+                  </p>
+                </div>
+                <p style={{ color: 'rgba(42,31,20,0.38)', fontSize: '0.43rem', letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 600, fontFamily: 'Work Sans, sans-serif' }}>
+                  {bonus.tag}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function HomePage() {
   return (
     <div id="top" className="min-h-screen bg-beige text-brown selection:bg-sage selection:text-white">
@@ -423,14 +560,9 @@ function HomePage() {
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative flex justify-center">
-          <img
-            src="/copertina.png"
-            alt="Pancia Piatta in 21 Giorni - Copertina Ebook"
-            width="500"
-            height="625"
-            loading="lazy"
-            className="relative rounded-[2.5rem] shadow-2xl object-contain w-3/5 border border-sage/10"
-          />
+          <div className="relative w-3/5">
+            <EbookMockup />
+          </div>
           <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-sage/10 max-w-[220px] hidden sm:block">
             <div className="flex gap-1 mb-3">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
             <p className="text-base italic font-serif text-brown leading-snug">"I jeans mi stanno finalmente bene!"</p>
@@ -610,11 +742,9 @@ function HomePage() {
             </ul>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative flex justify-center">
-            <img
-              src="/copertina.png"
-              alt="Pancia Piatta in 21 Giorni - Copertina Ebook"
-              className="rounded-[2.5rem] shadow-2xl object-contain w-4/5 border border-sage/10"
-            />
+            <div className="w-4/5">
+              <EbookMockup showBonuses={false} />
+            </div>
           </motion.div>
         </div>
       </section>
