@@ -591,7 +591,7 @@ function HomePage() {
             <div className="flex flex-wrap items-center gap-3 mb-5">
               <span className="bg-white/20 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest">⭐ L'ebook principale</span>
               <span className="text-white/50 line-through text-sm font-medium">€39,99</span>
-              <span className="text-yellow-300 font-black text-sm">→ incluso</span>
+              <span className="text-yellow-300 font-black text-sm">→ €19,99</span>
             </div>
             <h3 className="text-2xl md:text-4xl font-serif text-white mb-3 leading-tight">Pancia Piatta in 21 Giorni</h3>
             <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-3xl">
