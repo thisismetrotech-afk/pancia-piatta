@@ -667,6 +667,10 @@ function HomePage() {
                       <span>{p}</span>
                     </li>
                   ))}
+                  <li className="flex items-center gap-2 text-sm text-brown/40 italic">
+                    <span className="text-sage/50 font-black flex-shrink-0">✓</span>
+                    <span>E molto altro...</span>
+                  </li>
                 </ul>
               </motion.div>
             ))}
@@ -990,13 +994,16 @@ function HomePage() {
                 { icon: <Gift className="w-5 h-5" />, item: "Bonus 2: Riattiva il Metabolismo — proteine, sonno, stress e abitudini", value: "€14", free: true },
                 { icon: <Gift className="w-5 h-5" />, item: "Bonus 3: Routine Anti Gonfiore — routine mattina e sera per sgonfiarti", value: "€9", free: true },
                 { icon: <Gift className="w-5 h-5" />, item: "Bonus 4: Piano di Movimento Leggero — camminata, yoga, stretching a casa", value: "€11", free: true },
+                { icon: <Zap className="w-5 h-5" />, item: "E molto altro ancora...", value: "", extra: true },
               ].map((row, idx) => (
                 <div key={idx} className="flex items-center justify-between py-3 border-b border-white/10 last:border-0">
                   <div className="flex items-center gap-3 text-white/90">
                     <div className="opacity-70">{row.icon}</div>
                     <span className="font-medium text-sm">{row.item}</span>
                   </div>
-                  {(row as any).free ? (
+                  {(row as any).extra ? (
+                    null
+                  ) : (row as any).free ? (
                     <div className="flex items-center gap-2">
                       <span className="text-sm line-through opacity-50 text-white">{row.value}</span>
                       <span className="text-sm font-black text-yellow-300">Gratis</span>
