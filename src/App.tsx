@@ -620,27 +620,27 @@ function HomePage() {
             {[
               {
                 num: 1, icon: "🥗", title: "Piano Alimentare Semplice", value: "€12",
-                tagline: "La tua guida settimanale pronta all'uso",
-                desc: "Un template chiaro e immediato per costruire la tua settimana alimentare senza stress. Ideale se parti da zero o hai sempre trovato le diete troppo complicate da seguire nel quotidiano.",
-                points: ["Struttura settimanale già pronta", "Sostituzioni facili per vegetariane", "Consigli pratici per la spesa"],
+                tagline: "Colazione, pranzo e cena: cosa mettere nel piatto ogni giorno",
+                desc: "Guida pratica per costruire pasti equilibrati dalla mattina alla sera. Impari a comporre una colazione che sazia, uno spuntino intelligente, un pranzo leggero e una cena digeribile — senza ossessionarti con le calorie.",
+                points: ["Come comporre colazione, pranzo e cena", "Cosa evitare per non appesantire il corpo", "Consigli pratici per rendere il piano sostenibile"],
               },
               {
                 num: 2, icon: "⚡", title: "Riattiva il Metabolismo", value: "€14",
-                tagline: "Il protocollo naturale per bruciare di più",
-                desc: "Scopri quali alimenti termogenici mangiare, quando e come, per accelerare il metabolismo in modo naturale e duraturo. Include il rituale dei 7 minuti al mattino che fa davvero la differenza.",
-                points: ["Alimenti termogenici e orari ottimali", "Il rituale mattutino dei 7 minuti", "Come evitare il plateau delle diete"],
+                tagline: "Le abitudini semplici che riattivano il tuo metabolismo",
+                desc: "Scopri cosa influenza davvero il tuo metabolismo: la regolarità dei pasti, il ruolo delle proteine, l'idratazione, il sonno e lo stress. Un approccio completo che va ben oltre la semplice dieta.",
+                points: ["Proteine, idratazione e regolarità dei pasti", "Come sonno e stress rallentano il metabolismo", "Le abitudini da eliminare subito"],
               },
               {
                 num: 3, icon: "🌿", title: "Routine Anti Gonfiore", value: "€9",
-                tagline: "10 minuti al giorno, pancia più piatta",
-                desc: "Una sequenza di tecniche validate per ridurre il gonfiore addominale in modo rapido e visibile. Routine mattutina e serale con esercizi di respirazione diaframmatica e massaggi drenanti.",
-                points: ["Routine mattutina + serale da 5 min", "Respirazione diaframmatica guidata", "Massaggi drenanti fai-da-te"],
+                tagline: "Una routine mattina e sera per sgonfiarti ogni giorno",
+                desc: "Due routine pratiche e ripetibili — una al mattino e una alla sera — con gesti semplici: acqua, respirazione lenta, colazione calma, tisana serale e piccoli accorgimenti anti-gonfiore durante la giornata.",
+                points: ["Routine mattutina: acqua, respiro e colazione lenta", "Routine serale: tisana e rilassamento", "Piccoli gesti anti-gonfiore durante la giornata"],
               },
               {
                 num: 4, icon: "🧘", title: "Piano di Movimento Leggero", value: "€11",
-                tagline: "Muoviti senza palestra, senza stress",
-                desc: "21 giorni di movimento dolce studiato per lavorare in sinergia con il piano alimentare. Zero attrezzi, zero palestra. Progettato anche per chi non si è mai allenata in vita sua.",
-                points: ["21 giorni di esercizi guidati", "Zero attrezzi, zero abbonamenti", "Adatto a tutti i livelli di partenza"],
+                tagline: "Muoviti ogni giorno senza stress e senza palestra",
+                desc: "Un piano settimanale di movimento leggero — camminata, stretching, yoga, Pilates e esercizi a corpo libero — progettato per chi parte da zero e vuole sentirsi più attiva senza fatica.",
+                points: ["Camminata quotidiana + stretching e mobilità", "Yoga leggero, Pilates ed esercizi a casa", "Come rendere il movimento un'abitudine duratura"],
               },
             ].map((bonus, idx) => (
               <motion.div key={bonus.num} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08 }}
