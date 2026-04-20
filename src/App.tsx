@@ -980,18 +980,16 @@ function HomePage() {
           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
             <span className="inline-block px-6 py-2 bg-white/20 rounded-full text-xs font-black tracking-[0.2em] uppercase mb-10">🛒 Offerta Lancio Estate 2026</span>
             <h2 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">Prendi l'Ebook + 4 Bonus Gratis Adesso</h2>
-            <p className="text-xl md:text-2xl text-white/90 mb-10 font-medium leading-relaxed">Piano completo + 4 bonus esclusivi, 6 studi scientifici, 5 ricette bonus. Ebook immediato.</p>
+            <p className="text-xl md:text-2xl text-white/90 mb-10 font-medium leading-relaxed">L'ebook principale + 4 bonus esclusivi. Tutto ciò che ti serve per ridurre il gonfiore in 21 giorni. Accesso immediato via email.</p>
 
             <div className="bg-white/10 border border-white/20 rounded-3xl p-8 mb-12 text-left max-w-xl mx-auto">
               <p className="text-sm font-black uppercase tracking-widest text-white/70 mb-6 text-center">Cosa ricevi oggi</p>
               {[
-                { icon: <Utensils className="w-5 h-5" />, item: "Piano pasti 21 giorni completo", value: "€25" },
-                { icon: <FlaskConical className="w-5 h-5" />, item: "6 studi scientifici spiegati", value: "€15" },
-                { icon: <Zap className="w-5 h-5" />, item: "5 ricette sgonfianti in 15 minuti", value: "€10" },
-                { icon: <Gift className="w-5 h-5" />, item: "Bonus 1: Piano Alimentare Semplice", value: "€12", free: true },
-                { icon: <Gift className="w-5 h-5" />, item: "Bonus 2: Riattiva il Metabolismo", value: "€14", free: true },
-                { icon: <Gift className="w-5 h-5" />, item: "Bonus 3: Routine Anti Gonfiore", value: "€9", free: true },
-                { icon: <Gift className="w-5 h-5" />, item: "Bonus 4: Piano di Movimento Leggero", value: "€11", free: true },
+                { icon: <Utensils className="w-5 h-5" />, item: "Pancia Piatta in 21 Giorni — piano alimentare completo + 6 studi + 5 ricette", value: "€39,99" },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 1: Piano Alimentare Semplice — colazione, pranzo e cena già strutturati", value: "€12", free: true },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 2: Riattiva il Metabolismo — proteine, sonno, stress e abitudini", value: "€14", free: true },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 3: Routine Anti Gonfiore — routine mattina e sera per sgonfiarti", value: "€9", free: true },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 4: Piano di Movimento Leggero — camminata, yoga, stretching a casa", value: "€11", free: true },
               ].map((row, idx) => (
                 <div key={idx} className="flex items-center justify-between py-3 border-b border-white/10 last:border-0">
                   <div className="flex items-center gap-3 text-white/90">
@@ -1011,7 +1009,7 @@ function HomePage() {
               <div className="flex items-center justify-between pt-5 mt-2">
                 <span className="font-black uppercase tracking-widest text-sm">Valore totale</span>
                 <div className="flex items-center gap-3">
-                  <span className="text-xl line-through opacity-50 font-serif">€96</span>
+                  <span className="text-xl line-through opacity-50 font-serif">€85,99</span>
                   <span className="text-3xl font-black text-yellow-300 font-serif">€19,99</span>
                 </div>
               </div>
