@@ -575,6 +575,141 @@ function HomePage() {
         </motion.div>
       </section>
 
+      {/* COSA OTTIENI */}
+      <section className="py-24 bg-cream">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          <div className="text-center mb-16 px-4">
+            <span className="text-sage font-bold tracking-widest uppercase text-xs mb-3 block">🎁 Il tuo pacchetto completo</span>
+            <h2 className="text-4xl md:text-5xl font-serif text-brown mb-5">Ecco cosa ottieni<br /><span className="italic text-sage">a soli €19,99</span></h2>
+            <p className="text-lg text-brown/65 max-w-xl mx-auto leading-relaxed">Tutto quello di cui hai bisogno per cambiare il tuo corpo in 21 giorni. Niente di più, niente di meno.</p>
+          </div>
+
+          {/* EBOOK PRINCIPALE */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="bg-sage rounded-[2rem] p-8 md:p-12 mb-6">
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+              <span className="bg-white/20 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest">⭐ L'ebook principale</span>
+              <span className="text-white/50 line-through text-sm font-medium">€39,99</span>
+              <span className="text-yellow-300 font-black text-sm">→ incluso</span>
+            </div>
+            <h3 className="text-2xl md:text-4xl font-serif text-white mb-3 leading-tight">Pancia Piatta in 21 Giorni</h3>
+            <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-3xl">
+              Il cuore del programma. <strong className="text-white">90+ pagine</strong> con tutto quello che ti serve: piano pasti completo giorno per giorno, 6 studi scientifici spiegati in modo semplice, lista della spesa pronta da stampare e la ricetta esclusiva della tisana sgonfiante serale.
+            </p>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {[
+                "Piano pasti 21 giorni (colazione → cena)",
+                "6 studi scientifici illustrati",
+                "Lista spesa settimanale stampabile",
+                "Guida mangiare fuori casa",
+                "5 ricette sgonfianti in 15 minuti",
+                "Tisana serale esclusiva anti-gonfiore",
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-2 text-white/90 text-sm bg-white/10 rounded-xl px-4 py-3">
+                  <Check className="w-4 h-4 text-white flex-shrink-0" />
+                  <span className="font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* 4 BONUS */}
+          <p className="text-center text-xs font-black text-brown/40 uppercase tracking-[0.2em] mb-6">+ 4 bonus esclusivi inclusi gratis</p>
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            {[
+              {
+                num: 1, icon: "🥗", title: "Piano Alimentare Semplice", value: "€12",
+                tagline: "La tua guida settimanale pronta all'uso",
+                desc: "Un template chiaro e immediato per costruire la tua settimana alimentare senza stress. Ideale se parti da zero o hai sempre trovato le diete troppo complicate da seguire nel quotidiano.",
+                points: ["Struttura settimanale già pronta", "Sostituzioni facili per vegetariane", "Consigli pratici per la spesa"],
+              },
+              {
+                num: 2, icon: "⚡", title: "Riattiva il Metabolismo", value: "€14",
+                tagline: "Il protocollo naturale per bruciare di più",
+                desc: "Scopri quali alimenti termogenici mangiare, quando e come, per accelerare il metabolismo in modo naturale e duraturo. Include il rituale dei 7 minuti al mattino che fa davvero la differenza.",
+                points: ["Alimenti termogenici e orari ottimali", "Il rituale mattutino dei 7 minuti", "Come evitare il plateau delle diete"],
+              },
+              {
+                num: 3, icon: "🌿", title: "Routine Anti Gonfiore", value: "€9",
+                tagline: "10 minuti al giorno, pancia più piatta",
+                desc: "Una sequenza di tecniche validate per ridurre il gonfiore addominale in modo rapido e visibile. Routine mattutina e serale con esercizi di respirazione diaframmatica e massaggi drenanti.",
+                points: ["Routine mattutina + serale da 5 min", "Respirazione diaframmatica guidata", "Massaggi drenanti fai-da-te"],
+              },
+              {
+                num: 4, icon: "🧘", title: "Piano di Movimento Leggero", value: "€11",
+                tagline: "Muoviti senza palestra, senza stress",
+                desc: "21 giorni di movimento dolce studiato per lavorare in sinergia con il piano alimentare. Zero attrezzi, zero palestra. Progettato anche per chi non si è mai allenata in vita sua.",
+                points: ["21 giorni di esercizi guidati", "Zero attrezzi, zero abbonamenti", "Adatto a tutti i livelli di partenza"],
+              },
+            ].map((bonus, idx) => (
+              <motion.div key={bonus.num} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08 }}
+                className="bg-white border border-sage/15 rounded-[2rem] p-8 flex flex-col gap-5 shadow-sm hover:shadow-xl hover:border-sage/35 transition-all group">
+                <div>
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-sage/10 group-hover:bg-sage/20 rounded-2xl flex items-center justify-center text-2xl transition-colors">{bonus.icon}</div>
+                      <span className="text-xs font-black text-sage uppercase tracking-widest">Bonus {bonus.num}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs text-brown/35 line-through block">{bonus.value}</span>
+                      <span className="text-xs font-black text-sage">Gratis</span>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-serif font-bold text-brown mb-1">{bonus.title}</h3>
+                  <p className="text-sm font-bold text-sage mb-4">{bonus.tagline}</p>
+                  <p className="text-brown/65 leading-relaxed text-sm">{bonus.desc}</p>
+                </div>
+                <ul className="space-y-2 border-t border-sage/10 pt-5">
+                  {bonus.points.map((p) => (
+                    <li key={p} className="flex items-center gap-2 text-sm text-brown/70">
+                      <span className="text-sage font-black flex-shrink-0">✓</span>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* RIEPILOGO PREZZO + CTA */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="bg-brown rounded-[2rem] p-8 md:p-14 text-center text-white">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-white/40 mb-8">Valore reale del pacchetto</p>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-10">
+              {[
+                { label: "Pancia Piatta 21 Giorni", val: "€39,99" },
+                { label: "Bonus 1", val: "€12" },
+                { label: "Bonus 2", val: "€14" },
+                { label: "Bonus 3", val: "€9" },
+                { label: "Bonus 4", val: "€11" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-2 text-sm">
+                  <span className="text-white/45">{item.label}</span>
+                  <span className="text-white/30 line-through font-bold">{item.val}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mb-10">
+              <div className="flex items-center justify-center gap-5 mb-2">
+                <span className="text-3xl line-through text-white/25 font-serif">€85,99</span>
+                <span className="text-6xl md:text-7xl font-black text-white font-serif">€19,99</span>
+              </div>
+              <p className="text-white/45 text-sm">Un risparmio di oltre €65 — solo per oggi</p>
+            </div>
+            <a
+              href={STRIPE_URL}
+              onClick={trackCheckout}
+              className="cta-pulse inline-flex items-center gap-3 bg-sage text-white px-12 py-6 rounded-full text-xl font-black hover:bg-sage-dark shadow-2xl shadow-sage/30 transition-all group mb-5"
+            >
+              Voglio tutto questo — €19,99 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <p className="text-white/35 text-xs uppercase tracking-widest">Ebook immediato via email · Garanzia rimborso 30 giorni · Pagamento sicuro Stripe</p>
+          </motion.div>
+
+        </div>
+      </section>
+
       {/* PAIN SECTION */}
       <section className="py-20 bg-brown text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
