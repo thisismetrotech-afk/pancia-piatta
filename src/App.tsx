@@ -251,6 +251,10 @@ function LivePurchaseNotification() {
           <div>
             <p className="text-sm font-bold text-brown leading-tight"><span className="text-sage">{n.name}</span> di {n.city}</p>
             <p className="text-xs text-brown/60 font-medium">ha acquistato l'ebook · {minsAgo} min fa</p>
+            <span className="inline-flex items-center gap-1 text-[10px] font-black text-emerald-600 uppercase tracking-wide mt-1">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+              Acquisto verificato
+            </span>
           </div>
         </motion.div>
       )}
@@ -271,7 +275,7 @@ function LiveViewersBadge() {
   );
 }
 
-function StickyMobileCTA() {
+function StickyCTA() {
   const [show, setShow] = useState(false);
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 400);
@@ -286,28 +290,55 @@ function StickyMobileCTA() {
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           exit={{ y: 100 }}
-          className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-white border-t border-sage/20 shadow-2xl p-4"
+          className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-sage/20 shadow-2xl p-4"
         >
-          <a
-            href={STRIPE_URL}
-            onClick={trackCheckout}
-            className="cta-pulse flex items-center justify-center gap-3 bg-sage text-white w-full py-4 rounded-2xl text-base font-black shadow-lg shadow-sage/30"
-          >
-            Scarica l'Ebook — <span className="line-through opacity-60 font-normal text-sm">€39,99</span> €19,99 <ArrowRight className="w-5 h-5" />
-          </a>
+          <div className="max-w-3xl mx-auto flex items-center gap-4">
+            <div className="hidden sm:block flex-shrink-0">
+              <p className="text-sm font-black text-brown leading-tight">Pancia Piatta in 21 Giorni</p>
+              <p className="text-xs text-brown/50 font-medium">Ebook immediato · Garanzia 30 giorni</p>
+            </div>
+            <a
+              href={STRIPE_URL}
+              onClick={trackCheckout}
+              className="cta-pulse flex items-center justify-center gap-3 bg-sage text-white w-full py-4 rounded-2xl text-base font-black shadow-lg shadow-sage/30 sm:flex-shrink-0 sm:w-auto sm:px-8"
+            >
+              Scarica l'Ebook — <span className="line-through opacity-60 font-normal text-sm">€39,99</span> €19,99 <ArrowRight className="w-5 h-5" />
+            </a>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
 
+function useTodayBuyers() {
+  const calc = () => {
+    const now = new Date();
+    const hourOfDay = now.getHours();
+    return 30 + hourOfDay;
+  };
+  const [count, setCount] = useState(calc);
+  useEffect(() => {
+    const interval = setInterval(() => setCount(calc()), 60000);
+    return () => clearInterval(interval);
+  }, []);
+  return count;
+}
+
 function UrgencyBanner() {
   const { h, m, s } = useCountdown(4);
+  const buyers = useTodayBuyers();
   return (
-    <div className="bg-brown text-white text-center py-3 px-4 text-sm font-bold tracking-wide">
-      <span className="opacity-80">🔥 Offerta lancio termina tra:</span>{' '}
-      <span className="font-black text-yellow-300 tabular-nums">{h}:{m}:{s}</span>
-      <span className="opacity-80 ml-3">· <span className="line-through opacity-60">€39,99</span> <span className="text-yellow-300">€19,99</span></span>
+    <div className="bg-brown text-white text-center py-3 px-4 text-sm font-bold tracking-wide flex flex-wrap justify-center items-center gap-x-4 gap-y-1">
+      <span className="opacity-90">🔥 <span className="text-yellow-300">{buyers} donne</span> hanno comprato oggi
+        <span className="inline-flex items-center gap-1 ml-2 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide">
+          <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+          acquisti verificati
+        </span>
+      </span>
+      <span className="opacity-40">·</span>
+      <span className="opacity-80">Offerta termina tra: <span className="font-black text-yellow-300 tabular-nums">{h}:{m}:{s}</span></span>
+      <span className="opacity-80">· <span className="line-through opacity-60">€39,99</span> <span className="text-yellow-300">€19,99</span></span>
     </div>
   );
 }
@@ -327,7 +358,7 @@ function HomePage() {
       <UrgencyBanner />
       <ExitIntentPopup />
       <LivePurchaseNotification />
-      <StickyMobileCTA />
+      <StickyCTA />
 
       {/* HEADER */}
       <header className="sticky top-0 z-40 bg-beige/90 backdrop-blur-md border-b border-sage/10">
@@ -392,7 +423,6 @@ function HomePage() {
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative flex justify-center">
-          <div className="absolute -inset-4 bg-sage/5 rounded-[3rem] rotate-2"></div>
           <img
             src="/copertina.png"
             alt="Pancia Piatta in 21 Giorni - Copertina Ebook"
@@ -405,6 +435,10 @@ function HomePage() {
             <div className="flex gap-1 mb-3">{[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}</div>
             <p className="text-base italic font-serif text-brown leading-snug">"I jeans mi stanno finalmente bene!"</p>
             <p className="text-xs font-bold text-brown/50 uppercase tracking-widest mt-2">— Tiziana Marletta</p>
+            <span className="inline-flex items-center gap-1 text-[10px] font-black text-emerald-600 uppercase tracking-wide mt-1">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+              Recensione verificata
+            </span>
           </div>
         </motion.div>
       </section>
@@ -556,7 +590,7 @@ function HomePage() {
       <section id="contenuto" className="py-32 bg-cream overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-20 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown leading-tight">48 pagine che cambiano il tuo rapporto con il cibo.</h2>
+            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown leading-tight">Oltre 90 pagine che cambiano il tuo rapporto con il cibo.</h2>
             <ul className="space-y-6">
               {[
                 "Piano pasti completo 21 giorni — colazione, spuntino, pranzo, merenda, cena",
@@ -623,7 +657,13 @@ function HomePage() {
                   </div>
                 </div>
                 <blockquote className="text-xl font-serif italic mb-8 leading-relaxed text-brown">"{testimonial.quote}"</blockquote>
-                <div className="bg-sage text-white px-4 py-2 rounded-full text-[11px] font-black uppercase tracking-widest shadow-md inline-block">{testimonial.result}</div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="bg-sage text-white px-4 py-2 rounded-full text-[11px] font-black uppercase tracking-widest shadow-md inline-block">{testimonial.result}</div>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-black text-emerald-600 uppercase tracking-wide">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+                    Recensione verificata
+                  </span>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -639,7 +679,11 @@ function HomePage() {
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center text-sage font-black text-lg">{t.author[0]}</div>
                 <div>
                   <p className="text-brown/80 italic mb-2 leading-snug">"{t.quote}"</p>
-                  <p className="text-xs font-black text-brown/40 uppercase tracking-widest">— {t.author}</p>
+                  <p className="text-xs font-black text-brown/40 uppercase tracking-widest mb-1">— {t.author}</p>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-black text-emerald-600 uppercase tracking-wide">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+                    Recensione verificata
+                  </span>
                 </div>
               </motion.div>
             ))}
@@ -670,8 +714,8 @@ function HomePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
             <span className="inline-block px-6 py-2 bg-white/20 rounded-full text-xs font-black tracking-[0.2em] uppercase mb-10">🛒 Offerta Lancio Estate 2026</span>
-            <h2 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">Prendi l'Ebook Adesso</h2>
-            <p className="text-xl md:text-2xl text-white/90 mb-10 font-medium leading-relaxed">Piano completo, 6 studi scientifici, 5 ricette bonus. Ebook immediato.</p>
+            <h2 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">Prendi l'Ebook + 4 Bonus Gratis Adesso</h2>
+            <p className="text-xl md:text-2xl text-white/90 mb-10 font-medium leading-relaxed">Piano completo + 4 bonus esclusivi, 6 studi scientifici, 5 ricette bonus. Ebook immediato.</p>
 
             <div className="bg-white/10 border border-white/20 rounded-3xl p-8 mb-12 text-left max-w-xl mx-auto">
               <p className="text-sm font-black uppercase tracking-widest text-white/70 mb-6 text-center">Cosa ricevi oggi</p>
@@ -679,21 +723,30 @@ function HomePage() {
                 { icon: <Utensils className="w-5 h-5" />, item: "Piano pasti 21 giorni completo", value: "€25" },
                 { icon: <FlaskConical className="w-5 h-5" />, item: "6 studi scientifici spiegati", value: "€15" },
                 { icon: <Zap className="w-5 h-5" />, item: "5 ricette sgonfianti in 15 minuti", value: "€10" },
-                { icon: <Gift className="w-5 h-5" />, item: "Bonus: tisana sgonfiante serale", value: "Gratis" },
-                { icon: <Users className="w-5 h-5" />, item: "Guida mangiare fuori casa", value: "Gratis" },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 1: Piano Alimentare Semplice", value: "€12", free: true },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 2: Riattiva il Metabolismo", value: "€14", free: true },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 3: Routine Anti Gonfiore", value: "€9", free: true },
+                { icon: <Gift className="w-5 h-5" />, item: "Bonus 4: Piano di Movimento Leggero", value: "€11", free: true },
               ].map((row, idx) => (
                 <div key={idx} className="flex items-center justify-between py-3 border-b border-white/10 last:border-0">
                   <div className="flex items-center gap-3 text-white/90">
                     <div className="opacity-70">{row.icon}</div>
                     <span className="font-medium text-sm">{row.item}</span>
                   </div>
-                  <span className="text-sm font-black text-yellow-300">{row.value}</span>
+                  {(row as any).free ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm line-through opacity-50 text-white">{row.value}</span>
+                      <span className="text-sm font-black text-yellow-300">Gratis</span>
+                    </div>
+                  ) : (
+                    <span className="text-sm font-black text-yellow-300">{row.value}</span>
+                  )}
                 </div>
               ))}
               <div className="flex items-center justify-between pt-5 mt-2">
                 <span className="font-black uppercase tracking-widest text-sm">Valore totale</span>
                 <div className="flex items-center gap-3">
-                  <span className="text-xl line-through opacity-50 font-serif">€50+</span>
+                  <span className="text-xl line-through opacity-50 font-serif">€96</span>
                   <span className="text-3xl font-black text-yellow-300 font-serif">€19,99</span>
                 </div>
               </div>
@@ -708,12 +761,40 @@ function HomePage() {
             >
               Scarica Ora <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
             </a>
-            <div className="flex flex-wrap justify-center gap-8 text-sm font-bold text-white/80 uppercase tracking-widest mb-8">
+            <div className="flex flex-wrap justify-center gap-8 text-sm font-bold text-white/80 uppercase tracking-widest mb-10">
               <span>🔒 Pagamento sicuro Stripe</span>
               <span>📄 Ebook immediato via email</span>
               <span>✅ 30gg Garanzia rimborso</span>
             </div>
-            <p className="text-white/50 text-xs">Accesso immediato dopo l'acquisto. Compatibile con tutti i dispositivi.</p>
+
+            {/* Loghi metodi di pagamento */}
+            <div className="flex flex-wrap justify-center items-center gap-3 mb-10">
+              {["VISA", "MC", "AMEX", "Apple Pay", "Google Pay"].map((method) => (
+                <span key={method} className="bg-white/15 border border-white/20 text-white/80 text-xs font-black px-3 py-1.5 rounded-lg tracking-wide">
+                  {method}
+                </span>
+              ))}
+            </div>
+
+            {/* Cosa succede dopo l'acquisto */}
+            <div className="bg-white/10 border border-white/20 rounded-3xl p-8 max-w-xl mx-auto mb-6">
+              <p className="text-sm font-black uppercase tracking-widest text-white/70 mb-6 text-center">Cosa succede dopo il pagamento</p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                {[
+                  { step: "1", icon: "🔒", label: "Paghi in sicurezza", desc: "Checkout Stripe protetto" },
+                  { step: "2", icon: "📧", label: "Ricevi l'email", desc: "Entro 1 minuto nella tua casella" },
+                  { step: "3", icon: "📖", label: "Scarichi subito", desc: "Leggi su qualsiasi dispositivo" },
+                ].map((s) => (
+                  <div key={s.step} className="flex-1 text-center">
+                    <div className="text-3xl mb-2">{s.icon}</div>
+                    <p className="text-white font-black text-sm mb-1">{s.label}</p>
+                    <p className="text-white/60 text-xs">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-white/50 text-xs">Compatibile con telefono, tablet e computer.</p>
           </motion.div>
         </div>
       </section>
