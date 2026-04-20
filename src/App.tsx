@@ -595,16 +595,16 @@ function HomePage() {
             </div>
             <h3 className="text-2xl md:text-4xl font-serif text-white mb-3 leading-tight">Pancia Piatta in 21 Giorni</h3>
             <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-3xl">
-              Il cuore del programma. <strong className="text-white">90+ pagine</strong> con tutto quello che ti serve: piano pasti completo giorno per giorno, 6 studi scientifici spiegati in modo semplice, lista della spesa pronta da stampare e la ricetta esclusiva della tisana sgonfiante serale.
+              Il cuore del programma. <strong className="text-white">48 pagine</strong> con tutto quello che ti serve: capisci perché la tua pancia si gonfia, cosa mangiare (e cosa evitare), e segui un piano alimentare completo giorno per giorno — tutto basato su 6 studi scientifici reali.
             </p>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[
-                "Piano pasti 21 giorni (colazione → cena)",
-                "6 studi scientifici illustrati",
-                "Lista spesa settimanale stampabile",
-                "Guida mangiare fuori casa",
-                "5 ricette sgonfianti in 15 minuti",
-                "Tisana serale esclusiva anti-gonfiore",
+                "Perché la pancia si gonfia — le cause vere",
+                "L'intestino, il tuo secondo cervello",
+                "Piano alimentare completo di 21 giorni",
+                "5 ricette rapide anti-gonfiore",
+                "Abitudini quotidiane + errori da evitare",
+                "6 studi scientifici spiegati + piano d'azione",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-2 text-white/90 text-sm bg-white/10 rounded-xl px-4 py-3">
                   <Check className="w-4 h-4 text-white flex-shrink-0" />
@@ -857,17 +857,17 @@ function HomePage() {
       <section id="contenuto" className="py-32 bg-cream overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-20 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown leading-tight">Oltre 90 pagine che cambiano il tuo rapporto con il cibo.</h2>
+            <h2 className="text-4xl md:text-6xl font-serif mb-10 text-brown leading-tight">Oltre 48 pagine che cambiano il tuo rapporto con il cibo.</h2>
             <ul className="space-y-6">
               {[
-                "Piano pasti completo 21 giorni — colazione, spuntino, pranzo, merenda, cena",
-                "Lista della spesa settimana per settimana — pronta da stampare",
-                "5 ricette sgonfianti in 15 minuti — semplici e gustose",
-                "I 6 studi scientifici illustrati con grafici e spiegazioni",
-                "Guida \"Come mangiare fuori casa\" — ristoranti, mare, aperitivi",
-                "Sezione \"Gestire i giorni di strappo\" senza sensi di colpa",
-                "Piano di idratazione ottimale per l'estate",
-                "Bonus: tisana sgonfiante serale (ricetta esclusiva)"
+                "Perché la pancia si gonfia — le cause principali spiegate",
+                "L'intestino, il tuo secondo cervello — microbioma e gonfiore",
+                "La logica del metodo in 21 giorni — come funziona davvero",
+                "Alimenti da limitare e quelli consigliati con i loro benefici",
+                "Piano alimentare completo di 21 giorni giorno per giorno",
+                "5 ricette rapide anti-gonfiore pronte in pochi minuti",
+                "Abitudini quotidiane che fanno la differenza + errori da evitare",
+                "6 studi scientifici spiegati + conclusione e piano d'azione"
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-4">
                   <div className="mt-1 bg-sage text-white rounded-full p-1 flex-shrink-0"><Check className="w-4 h-4" /></div>
